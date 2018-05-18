@@ -1,0 +1,30 @@
+<app-navbar></app-navbar>
+<div class="container">
+<div class="div-per">
+    <h2 class="bg-primary text-white h-per">
+      USER SETTINGS
+    </h2>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <div class="list-group" id="myList" role="tablist">
+      <a class="list-group-item list-group-item-action active" data-toggle="list" href="#user" role="tab">Users</a>
+      <a class="list-group-item list-group-item-action" data-toggle="list" href="#permission" role="tab">Permissions</a>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div class="tab-pane active" id="user" role="tabpanel">
+          <app-view-users></app-view-users>
+      </div>
+      <div class="tab-pane" id="permission" role="tabpanel">
+          <app-user-permission></app-user-permission>
+      </div>
+      <!-- <div class="tab-pane" id="settings" role="tabpanel">
+        Settings
+      </div> -->
+    </div>
+  </div>
+</div>
+</div>

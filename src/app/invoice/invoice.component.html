@@ -1,0 +1,179 @@
+<app-navbar></app-navbar>
+<div class="container">
+<div class="div-per">
+    <h2 class="bg-secondary text-white h-per">
+    PAYMENT INVOICE
+  </h2>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <form class="inv-form" #invoiceForm="ngForm" (ngSubmit)="onSubmit(invoiceForm)">
+      <div class="form-row">
+          <input type="hidden" name="InvoiceID" #InvoiceID="ngModel" [(ngModel)]="invoice.InvoiceID">
+          <div class="form-group col-md-6">
+            <label for="CustomerName">Customer Name</label>
+            <input class="form-control" name="CustomerName" #CustomerName="ngModel" [(ngModel)]="invoice.CustomerName" placeholder="Customer Name" required>
+              <!-- <div class="validation-error" *ngIf="CustomerName.invalid && CustomerName.touched">This field is required</div> -->
+          </div>
+          <div class="form-group col-md-2"></div>
+          <div class="form-group col-md-2">
+              <label for="Status">Status</label>
+              <input disabled class="form-control" name="Status" #Status="ngModel" [(ngModel)]="invoice.Status">
+          </div>
+          <div class="form-group form-group col-md-2">
+              <label for="InvoiceNumber">Invoice No.</label>
+              <input disabled class="form-control" name="InvoiceNumber" #InvoiceNumber="ngModel" [(ngModel)]="invoice.InvoiceNumber">
+          </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-2">
+            <label for="SchoolSessionID">Session</label>
+            <!-- <input class="form-control" name="SchoolSession" #SchoolSession="ngModel" [(ngModel)]="invoice.SchoolSession"> -->
+            <select class="form-control" name="SchoolSessionID" #SchoolSessionID="ngModel" [(ngModel)]="invoice.SchoolSessionID" required>
+                <option *ngFor="let ss of schoolSession" value="{{ss.SchoolSessionID}}">{{ss.SchoolSessionName}}</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="StudentClassID">Class</label>
+            <!-- <input type="text" class="form-control" name="StudentClass" #StudentClass="ngModel" [(ngModel)]="invoice.StudentClass" placeholder="Class"> -->
+            <select class="form-control" name="StudentClassID" #StudentClassID="ngModel" [(ngModel)]="invoice.StudentClassID" required>
+                <option *ngFor="let sc of studentClass" value="{{sc.StudentClassID}}">{{sc.StudentClassName}}</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="SchoolTermID">Term</label>
+          <!-- <input type="text" class="form-control" name="SchoolTerm" #SchoolTerm="ngModel" [(ngModel)]="invoice.SchoolTerm" placeholder="Term"> -->
+          <select class="form-control" name="SchoolTermID" #SchoolTermID="ngModel" [(ngModel)]="invoice.SchoolTermID" placeholder="Term" required>
+              <option *ngFor="let st of schoolTerm" value="{{st.SchoolTermID}}">{{st.SchoolTermName}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-2"></div>
+        <div class="form-group col-md-2">
+            <label for="InvoiceDate">Invoice Date</label>
+            <input type="date" class="form-control" name="InvoiceDate" #InvoiceDate="ngModel" [(ngModel)]="invoice.InvoiceDate" placeholder="Invoice Date" required>
+            <!-- <div class="validation-error" *ngIf="InvoiceDate.invalid && InvoiceDate.touched">This field is required</div> -->
+        </div>
+        <div class="form-group col-md-2">
+            <label for="Discount">Discount</label>
+            <input type="number" min="0" max="100" class="form-control" name="Discount" #Discount="ngModel" [(ngModel)]="invoice.Discount" (keyup)="calculateTotal()">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="ItemID">Item Description</label>
+          <!-- <input class="form-control" name="ItemCode" #ItemCode="ngModel" [(ngModel)]="invoiceDetail.ItemCode" placeholder="Item Code" required> -->
+          <select class="form-control" name="ItemID" #ItemID="ngModel" [(ngModel)]="invoiceDetail.ItemID" required>
+            <option *ngFor="let item of items" value="{{item.ItemID}}">{{item.ItemName}}</option>
+          </select>
+          <!-- <div class="validation-error" *ngIf="ItemCode.invalid && ItemCode.touched">This field is required</div> -->
+        </div>
+        <div class="form-group col-md-1">
+            <label for="Qty">Qty</label>
+          <input type="number" min="1" class="form-control" name="Qty" #Qty="ngModel" [(ngModel)]="invoiceDetail.Qty" placeholder="Qty" required>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="UnitPrice">Unit Price</label>
+          <input type="number" min="0" class="form-control" name="UnitPrice" #UnitPrice="ngModel" [(ngModel)]="invoiceDetail.UnitPrice" placeholder="Unit Price" required>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="LineTotal">Line Total</label>
+          <input disabled class="form-control" name="LineTotal" #LineTotal="ngModel" [(ngModel)]="invoiceDetail.LineTotal" placeholder="LineTotal" value="{{ invoiceDetail.Qty * invoiceDetail.UnitPrice | currency : 'NGN' : 2}}">
+        </div>
+        <div class="form-group col-md-1">
+            <label for="">&nbsp;</label>
+            <button [disabled]="!invoiceForm.valid" type="button" class="btn btn-block btn-info" (click)="onAdd()" title="Add to list"><i class="fa fa-plus"></i></button>
+        </div>
+        <div class="form-group col-md-1">
+            <label for="">&nbsp;</label>
+            <button type="button" class="btn btn-block btn-secondary" (click)="resetForm()" title="Clear form"><i class="fa fa-repeat"></i></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-sm table-hover">
+      <thead>
+        <td>Item Description</td>
+        <td>Qty</td>
+        <td>Price</td>
+        <td>Total</td>
+        <td>Action</td>
+      </thead>
+      <tbody>
+        <tr *ngFor="let idt of InvoiceArray">
+          <td>
+            {{idt.ItemID}} - {{idt.ItemName}}
+          </td>
+          <td>
+            {{idt.Qty}}
+          </td>
+          <td>
+            {{idt.UnitPrice | currency : "NGN" : 2}}
+          </td>
+          <td>
+            {{idt.LineTotal | currency : "NGN" : 2}}
+          </td>
+          <td>
+            <!-- <a class="btn btn-primary" (click)="showForEdit(idt)" >
+              <i class="fa fa-pencil-square-o"></i>
+            </a> -->
+            <a class="btn btn-danger" (click)="onRemove(idt)">
+                <i class="fa fa-trash-o"></i>
+              </a>
+          </td>
+      
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br/>
+<div class="row">
+  <div class="form-group col-md-8">
+    
+  </div>
+  <div class="form-group col-md-4" style="border: 1px solid; border-radius: 4px;">
+      <div class="row">
+    <div class="col-md-6">Discount: </div>
+    <div class="col-md-6">{{ invoiceDiscount | currency : "NGN" : 2}}</div>
+    </div>
+  </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-8">
+      
+    </div>
+    <div class="form-group col-md-4" style="border: 1px solid; border-radius: 4px;">
+        <div class="row">
+        <div class="col-md-6">Total Before Discount: </div>
+        <div class="col-md-6">{{ invoiceTotal | currency : "NGN" : 2}}</div>
+        </div>
+    </div>
+</div>
+<div class="row">
+  <div class="form-group col-md-8">
+    
+    </div>
+    <div class="form-group col-md-4" style="border: 1px solid; border-radius: 4px;">
+        <div class="row">
+        <div class="col-md-6">Total After Discount: </div>
+        <div class="col-md-6">{{ invoiceTotalAfterDiscount | currency : "NGN" : 2}}</div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-3">
+        <button [disabled]="!formReady" type="submit" class="btn btn-lg btn-block btn-success" (click)="onSubmit()" title="Add to list"><i class="fa fa-floppy-o"> Save</i></button>
+    </div>
+    <div class="form-group col-md-3">
+        <button type="button" class="btn btn-lg btn-block btn-secondary" (click)="resetForm(invoiceForm)" title="Clear form"><i class="fa fa-repeat"> Reset</i></button>
+    </div>
+      <div class="form-group col-md-6">
+        
+      
+      </div>
+  </div>
+  </div>

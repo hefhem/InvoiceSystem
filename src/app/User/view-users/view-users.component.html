@@ -1,0 +1,80 @@
+<form class="user-form" #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="firstName">First Name</label>
+        <input type="hidden" id="userID" name="userID" #userID="ngModel" [(ngModel)]="user.userID"/>
+        <input type="text" class="form-control" name="firstName" #firstName="ngModel" [(ngModel)]="user.firstName" required>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="lastName">Last Name</label>
+        <input type="text" class="form-control" name="lastName" #lastName="ngModel" [(ngModel)]="user.lastName" required>
+        <!-- <div class="validation-error" *ngIf="ItemCode.invalid && ItemCode.touched">This field is required</div> -->
+      </div>
+      <div class="form-group col-md-5">
+          <label for="userName">User Code</label>
+          <input type="text" class="form-control" name="userName" #userName="ngModel" [(ngModel)]="user.userName" required>
+          <!-- <div class="validation-error" *ngIf="ItemCode.invalid && ItemCode.touched">This field is required</div> -->
+        </div>
+        <div class="form-group col-md-5">
+            <label for="userPassword">User Password</label>
+            <input type="password" class="form-control" name="userPassword" #userPassword="ngModel" [(ngModel)]="user.userPassword">
+            <!-- <div class="validation-error" *ngIf="ItemCode.invalid && ItemCode.touched">This field is required</div> -->
+        </div>
+        <div class="form-group col-md-2">
+            <label for="isAdmin">Admin</label>
+            <select class="form-control" name="isAdmin" #isAdmin="ngModel" [(ngModel)]="user.isAdmin" required>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+    </div>
+  <div class="row">
+      <div class="form-group col-md-4">
+      </div>
+      <div class="form-group col-md-2">
+        <button [disabled]="!userForm.valid" type="button" class="btn btn-block btn-info" (click)="onAdd()" title="Add to list"><i class="fa fa-plus"></i> Add</button>
+      </div>
+      <div class="form-group col-md-2">
+        <button type="button" class="btn btn-block btn-secondary" (click)="resetForm()" title="Clear form"><i class="fa fa-repeat"></i> Reset</button>
+      </div>
+      <div class="form-group col-md-4">
+      </div>
+    </div>
+  </form>
+  <div class="row">
+      <div class="col-md-12">
+        <table class="table table-sm table-hover">
+          <thead>
+            <td><strong>User Code</strong></td>
+            <td><strong>First Name</strong></td>
+            <td><strong>Last Name</strong></td>
+            <td><strong>Is Admin</strong></td>
+            <td align="right"><strong>Action</strong></td>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>
+                  {{user.userName}}
+                </td>
+              <td>
+                {{user.firstName}}
+              </td>
+              <td>
+                {{user.lastName}}
+              </td>
+              <td>
+                {{user.isAdmin == 1 ? "Yes" : "No"}}
+              </td>
+              <td align="right">
+                <a class="btn btn-primary" (click)="showForEdit(user)" >
+                  <i class="fa fa-pencil text-white"></i>
+                </a>
+                <a class="btn btn-danger">
+                    <i class="fa fa-trash-o text-white"></i>
+                  </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>

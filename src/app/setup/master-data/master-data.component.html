@@ -1,0 +1,39 @@
+<app-navbar></app-navbar>
+<div class="container">
+<div class="div-per">
+    <h2 class="bg-primary text-white h-per">
+      SETUP
+    </h2>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <div class="list-group" id="myList" role="tablist">
+      <a class="list-group-item list-group-item-action active" data-toggle="list" href="#session" role="tab">School Session</a>
+      <a class="list-group-item list-group-item-action" data-toggle="list" href="#term" role="tab">School Term</a>
+      <a class="list-group-item list-group-item-action" data-toggle="list" href="#classes" role="tab">Student Class</a>
+      <a class="list-group-item list-group-item-action" data-toggle="list" href="#company" role="tab">School Profile</a>
+      <!-- <a class="list-group-item list-group-item-action" data-toggle="list" href="#settings" role="tab">Settings</a> -->
+    </div>
+  </div>
+  <div class="col-md-9">
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div class="tab-pane active" id="session" role="tabpanel">
+          <app-school-session></app-school-session>
+      </div>
+      <div class="tab-pane" id="term" role="tabpanel">
+          <app-school-term></app-school-term>
+      </div>
+      <div class="tab-pane" id="classes" role="tabpanel">
+          <app-student-class></app-student-class>
+      </div>
+      <div class="tab-pane" id="company" role="tabpanel">
+          <app-company></app-company>
+      </div>
+      <!-- <div class="tab-pane" id="settings" role="tabpanel">
+        Settings
+      </div> -->
+    </div>
+  </div>
+</div>
+</div>

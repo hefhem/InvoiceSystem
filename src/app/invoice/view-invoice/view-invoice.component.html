@@ -1,0 +1,46 @@
+<app-navbar></app-navbar>
+<div class="container">
+<div class="div-per">
+    <h2 class="bg-secondary text-white h-per">
+      EXISTING PAYMENT INVOICE
+    </h2>
+</div>
+<div class="row">
+    <div class="col-md-12">
+      <table class="table table-sm table-hover">
+        <thead>
+          <td>Item Description</td>
+          <td>Qty</td>
+          <td>Price</td>
+          <td>Total</td>
+          <td>Action</td>
+        </thead>
+        <tbody>
+          <tr *ngFor="let idt of InvoiceArray">
+            <td>
+              {{idt.ItemCode}} - {{idt.ItemName}}
+            </td>
+            <td>
+              {{idt.Qty}}
+            </td>
+            <td>
+              {{idt.UnitPrice | currency : "NGN" : 2}}
+            </td>
+            <td>
+              {{idt.LineTotal | currency : "NGN" : 2}}
+            </td>
+            <td>
+              <a class="btn btn-primary" (click)="showForEdit(idt)" >
+                <i class="fa fa-print-o"></i>
+              </a>
+              <a class="btn btn-danger">
+                  <i class="fa fa-trash-o"></i>
+                </a>
+            </td>
+        
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>

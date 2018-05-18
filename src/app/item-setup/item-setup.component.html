@@ -1,0 +1,32 @@
+<app-navbar></app-navbar>
+<div class="container">
+<div class="div-per">
+    <h2 class="bg-primary text-white h-per">
+      ITEM SETUP
+    </h2>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <div class="list-group" id="myList" role="tablist">
+      <a class="list-group-item list-group-item-action active" data-toggle="list" href="#item" role="tab">Item Master</a>
+      <a class="list-group-item list-group-item-action" data-toggle="list" href="#price" role="tab">Price List</a>
+      <!-- <a class="list-group-item list-group-item-action" data-toggle="list" href="#classes" role="tab">Classes</a> -->
+      <!-- <a class="list-group-item list-group-item-action" data-toggle="list" href="#settings" role="tab">Settings</a> -->
+    </div>
+  </div>
+  <div class="col-md-9">
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div class="tab-pane active" id="item" role="tabpanel">
+          <app-view-items></app-view-items>
+      </div>
+      <div class="tab-pane" id="price" role="tabpanel">
+          <app-price-lists></app-price-lists>
+      </div>
+      <!-- <div class="tab-pane" id="settings" role="tabpanel">
+        Settings
+      </div> -->
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,43 @@
+<form class="term-form" #termForm="ngForm" (ngSubmit)="onSubmit(termForm)">
+    <div class="form-row">
+      
+      <div class="form-group col-md-3">
+          <label for="schoolTermName">Term</label>
+        <input type="hidden" id="schoolTermID" name="schoolTermID" #schoolTermID="ngModel" [(ngModel)]="schoolTerm.schoolTermID"/>
+        <input type="text" class="form-control" name="schoolTermName" #schoolTermName="ngModel" [(ngModel)]="schoolTerm.schoolTermName" required />
+      </div>
+      <div class="form-group col-md-1">
+          <label for="">&nbsp;</label>
+          <button [disabled]="!termForm.valid" type="button" class="btn btn-block btn-info" (click)="onAdd()" title="Add to list"><i class="fa fa-plus"></i></button>
+      </div>
+      <div class="form-group col-md-1">
+          <label for="">&nbsp;</label>
+          <button type="button" class="btn btn-block btn-secondary" (click)="resetForm()" title="Clear form"><i class="fa fa-repeat"></i></button>
+      </div>
+    </div>
+  </form>
+  <div class="row">
+      <div class="col-md-8">
+        <table class="table table-sm table-hover">
+          <thead>
+            <td><strong>Description</strong></td>
+            <td align="right"><strong>Action</strong></td>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tm of schoolTerms">
+              <td>
+                {{tm.SchoolTermName}}
+              </td>
+              <td align="right">
+                <a class="btn btn-primary" (click)="showForEdit(tm)" >
+                  <i class="fa fa-pencil text-white"></i>
+                </a>
+                <a class="btn btn-danger">
+                    <i class="fa fa-trash-o text-white"></i>
+                  </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>

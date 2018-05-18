@@ -1,0 +1,43 @@
+<form class="class-form" #classForm="ngForm" (ngSubmit)="onSubmit(classForm)">
+    <div class="form-row">
+      
+      <div class="form-group col-md-3">
+          <label for="studentClassName">Student Class</label>
+        <input type="hidden" id="studentClassID" name="studentClassID" #studentClassID="ngModel" [(ngModel)]="studentClass.studentClassID"/>
+        <input type="text" class="form-control" name="studentClassName" #studentClassName="ngModel" [(ngModel)]="studentClass.studentClassName" required>
+      </div>
+      <div class="form-group col-md-1">
+          <label for="">&nbsp;</label>
+          <button [disabled]="!classForm.valid" type="button" class="btn btn-block btn-info" (click)="onAdd()" title="Add to list"><i class="fa fa-plus"></i></button>
+      </div>
+      <div class="form-group col-md-1">
+          <label for="">&nbsp;</label>
+          <button type="button" class="btn btn-block btn-secondary" (click)="resetForm()" title="Clear form"><i class="fa fa-repeat"></i></button>
+      </div>
+    </div>
+  </form>
+  <div class="row">
+      <div class="col-md-8">
+        <table class="table table-sm table-hover">
+          <thead>
+            <td><strong>Description</strong></td>
+            <td align="right"><strong>Action</strong></td>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sc of studentClasses">
+              <td>
+                {{sc.StudentClassName}}
+              </td>
+              <td align="right">
+                <a class="btn btn-primary" (click)="showForEdit(sc)" >
+                  <i class="fa fa-pencil text-white"></i>
+                </a>
+                <a class="btn btn-danger">
+                    <i class="fa fa-trash-o text-white"></i>
+                  </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
