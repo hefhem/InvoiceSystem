@@ -1,5 +1,5 @@
 export class Invoice {
-    invoiceID: number;
+    invoiceID = 0;
     invoiceNumber: string;
     invoiceDate: string;
     customerName: string;
@@ -41,19 +41,19 @@ export class PriceList {
   }
 
   export class StudentClass {
-      studentClassID: number;
+      studentClassID = 0;
       studentClassName: string;
       createdByID: number;
   }
 
   export class SchoolSession {
-      schoolSessionID: number;
+      schoolSessionID = 0;
       schoolSessionName: string;
       createdByID: number;
   }
 
   export class SchoolTerm {
-      schoolTermID: number;
+      schoolTermID = 0;
       schoolTermName: string;
       createdByID: number;
   }

@@ -40,6 +40,7 @@ import { StudentClassService } from './shared/services/student-class.service';
 import { UtilService } from './shared/services/util.service';
 import { StorageServiceModule } from 'angular-webstorage-service';
 import { HttpClientModule } from '@angular/common/http';
+import { HandleAPIService } from './shared/services/handle-api.service';
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import { HttpClientModule } from '@angular/common/http';
     SchoolSessionService,
     SchoolTermService,
     StudentClassService,
-    UtilService
+    UtilService,
+    HandleAPIService
   ],
   bootstrap: [AppComponent]
 })

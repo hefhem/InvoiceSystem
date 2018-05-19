@@ -4,6 +4,8 @@ import { ItemService } from '../../shared/services/item.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../shared/services/auth.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { HandleAPIService } from '../../shared/services/handle-api.service';
 
 @Component({
   selector: 'app-view-items',
@@ -11,36 +13,35 @@ import { Observable } from 'rxjs';
   styleUrls: ['./view-items.component.css']
 })
 export class ViewItemsComponent implements OnInit {
-
-  item = {
-    itemID: 0,
-    itemName: '',
-    createdByID: ''
-  };
+  endpoint = 'api/Item';
+  item: Item = new Item();
 
   items: Item[] = [];
   tokenData: any;
-  userID: '';
+  userID: any;
 
-  constructor(private itemSvc: ItemService, private toastr: ToastrService, private authService: AuthService) { }
+  constructor(
+    private handleAPI: HandleAPIService,
+    private toastr: ToastrService,
+    private authService: AuthService,
+  private route: Router) { }
 
   ngOnInit() {
-    this.tokenData = this.authService.decodeToken();
-    this.userID = this.tokenData.sid;
+    const tv = this.authService.isTokenValid();
+    if (!tv) {
+        this.route.navigate(['/login']);
+    }
+    this.userID = this.authService.getUserID();
     this.getItems();
   }
 
   onAdd() {
     this.item.createdByID = this.userID;
     if (this.item.itemID === 0) {
-      this.itemSvc.createItem(this.item)
+      this.handleAPI.create(this.item, this.endpoint)
         .subscribe( data => {
             this.toastr.success('Item added!', 'Success');
-            this.item = {
-              itemID: 0,
-              itemName: '',
-              createdByID: ''
-            };
+            this.item = new Item();
             this.getItems();
           },
           error => {
@@ -52,14 +53,10 @@ export class ViewItemsComponent implements OnInit {
           }
         );
     } else {
-      this.itemSvc.updateItem(this.item)
+      this.handleAPI.update(this.item, this.endpoint)
         .subscribe( data => {
             this.toastr.success('Item Updated!', 'Success');
-            this.item = {
-              itemID: 0,
-              itemName: '',
-              createdByID: ''
-            };
+            this.item = new Item();
             this.getItems();
           },
           error => {
@@ -73,9 +70,9 @@ export class ViewItemsComponent implements OnInit {
     }
   }
   showForEdit(item: any) {
-    this.itemSvc.getItemByID(item.itemID)
+    this.handleAPI.getByID(item.itemID, this.endpoint)
       .subscribe( (data: any) => {
-          this.items = data;
+          this.item = data;
         },
         error => {
           if (error.object) {
@@ -89,7 +86,7 @@ export class ViewItemsComponent implements OnInit {
 
   removeItem(item: any) {
     if (confirm('Are you sure you want to delete this item?')) {
-      this.itemSvc.deleteItem(item.itemID)
+      this.handleAPI.delete(item.itemID, this.endpoint)
         .subscribe( data => {
             this.toastr.success('Item removed', 'Success');
             this.getItems();
@@ -106,14 +103,10 @@ export class ViewItemsComponent implements OnInit {
    }
   }
   getItems() {
-    this.item = {
-      itemID: 0,
-      itemName: '',
-      createdByID: ''
-    };
-    this.itemSvc.getItem()
+    this.item = new Item();
+    this.handleAPI.get(this.endpoint)
       .subscribe( (data: any) => {
-        console.log(data);
+        // console.log(data);
           this.items = data;
         },
         error => {

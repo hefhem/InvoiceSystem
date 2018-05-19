@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as decode from 'jwt-decode';
+import { AuthService } from '../shared/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -7,10 +9,16 @@ import * as decode from 'jwt-decode';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
-  constructor() { }
+  userName: string;
+  constructor(private auth: AuthService, private router: Router) { }
 
   ngOnInit() {
+    this.userName = this.auth.getUserName();
+  }
+
+  logout() {
+    this.auth.removeToken();
+    this.router.navigate(['/login']);
   }
 
 }

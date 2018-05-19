@@ -1,15 +1,16 @@
 export class Company {
-    CompanyID: number;
-    CompanyName: string;
-    Address: string;
-    Town: string;
-    City: string;
-    State: string;
-    Country: string;
-    PrintHeader: string;
-    Email: string;
-    Phone1: string;
-    Phone2: string;
-    Phone3: string;
-    Website: string;
+    companyID: number;
+    companyName: string;
+    address: string;
+    town: string;
+    city: string;
+    state: string;
+    country: string;
+    printHeader: string;
+    email: string;
+    phone1: string;
+    phone2: string;
+    phone3: string;
+    website: string;
+    createdByID: number;
 }

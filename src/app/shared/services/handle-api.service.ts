@@ -8,11 +8,11 @@ import { HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
 
 @Injectable()
-export class ItemService {
-  endpoint = 'api/Item';
+export class HandleAPIService {
+
   constructor(private api: ApiService, private authService: AuthService) { }
 
-  createItem(comp: any) {
+  create(comp: any, url: string) {
     const token = this.authService.getFromLocal('token');
     const headerOption = new HttpHeaders({
       'Content-Type':  'application/json',
@@ -24,12 +24,12 @@ export class ItemService {
     };
     const body = JSON.stringify(comp);
     // const requestOptions = new HttpRequest(({method: RequestMethod.Post, headers: headerOption});
-    const seq = this.api.post('api/Item', body, httpOptions);
+    const seq = this.api.post(url, body, httpOptions);
 
     return seq;
   }
 
-  updateItem(comp: any) {
+  update(comp: any, url: string) {
     const token = this.authService.getFromLocal('token');
     const headerOption = new HttpHeaders({
       'Content-Type':  'application/json',
@@ -41,12 +41,12 @@ export class ItemService {
     };
     const body = JSON.stringify(comp);
     // const requestOptions = new HttpRequest(({method: RequestMethod.Post, headers: headerOption});
-    const seq = this.api.put('api/Item', body, httpOptions);
+    const seq = this.api.put(url, body, httpOptions);
 
     return seq;
   }
 
-  getItem() {
+  get(url: string) {
     const token = this.authService.getFromLocal('token');
     const headerOption = new HttpHeaders({
       'Content-Type':  'application/json',
@@ -58,12 +58,12 @@ export class ItemService {
     };
     const body = '';
     // const requestOptions = new HttpRequest(({method: RequestMethod.Post, headers: headerOption});
-    const seq = this.api.get('api/Item', body, httpOptions);
+    const seq = this.api.get(url, body, httpOptions);
 
     return seq;
   }
 
-  getItemByID(id: number) {
+  getByID(id: number, url: string) {
     const token = this.authService.getFromLocal('token');
     const headerOption = new HttpHeaders({
       'Content-Type':  'application/json',
@@ -75,12 +75,12 @@ export class ItemService {
     };
     const body = '';
     // const requestOptions = new HttpRequest(({method: RequestMethod.Post, headers: headerOption});
-    const seq = this.api.get('api/Item/' + id, body, httpOptions);
+    const seq = this.api.get(url + '/' + id, body, httpOptions);
 
     return seq;
   }
 
-  deleteItem(id: number) {
+  delete(id: number, url: string) {
     const token = this.authService.getFromLocal('token');
     const headerOption = new HttpHeaders({
       'Content-Type':  'application/json',
@@ -92,7 +92,7 @@ export class ItemService {
     };
     const body = '';
     // const requestOptions = new HttpRequest(({method: RequestMethod.Post, headers: headerOption});
-    const seq = this.api.delete('api/Item/' + id, httpOptions);
+    const seq = this.api.delete(url + '/' + id, httpOptions);
 
     return seq;
   }

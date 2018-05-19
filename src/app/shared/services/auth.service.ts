@@ -39,4 +39,29 @@ export class AuthService {
       this.tokenData = decode(tk);
       return this.tokenData;
     }
+    getUserName() {
+      const td = this.decodeToken();
+      return td.unique_name;
+    }
+
+    getUserID() {
+      const td = this.decodeToken();
+      return td.sid;
+    }
+
+    isTokenValid() {
+      const td = this.decodeToken();
+      if (td) {
+        // console.log(this.td);
+        const current_time = new Date().getTime() / 1000;
+        if (!(current_time > td.exp)) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+
+    }
 }

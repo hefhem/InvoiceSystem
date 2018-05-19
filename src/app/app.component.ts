@@ -14,20 +14,12 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService, private route: Router) { }
 
   ngOnInit() {
-    const token = this.authService.getFromLocal('token');
-    if (token) {
-      this.td = decode(token);
-      console.log(this.td);
-      const current_time = new Date().getTime() / 1000;
-      if (!(current_time > this.td.exp)) {
+    const tv = this.authService.isTokenValid();
+    if (tv) {
         this.route.navigate(['']);
-      } else {
-        this.route.navigate(['/login']);
-      }
     } else {
-      this.route.navigate(['/login']);
+        this.route.navigate(['/login']);
     }
-
   }
 
 }

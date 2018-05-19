@@ -26,14 +26,14 @@
           <tbody>
             <tr *ngFor="let tm of schoolTerms">
               <td>
-                {{tm.SchoolTermName}}
+                {{tm.schoolTermName}}
               </td>
               <td align="right">
                 <a class="btn btn-primary" (click)="showForEdit(tm)" >
                   <i class="fa fa-pencil text-white"></i>
                 </a>
                 <a class="btn btn-danger">
-                    <i class="fa fa-trash-o text-white"></i>
+                    <i class="fa fa-trash-o text-white" (click)="removeSchoolTerm(tm)"></i>
                   </a>
               </td>
             </tr>

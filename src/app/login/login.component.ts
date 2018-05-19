@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
       data => {
         // console.log(data);
         this.auth.saveInLocal('token', data);
+        this.toast.success('Authenticated!');
         this.router.navigate(['']);
       },
       error => {
