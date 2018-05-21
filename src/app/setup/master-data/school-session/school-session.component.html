@@ -6,6 +6,13 @@
       <input type="hidden" id="schoolSessionID" name="schoolSessionID" #schoolSessionID="ngModel" [(ngModel)]="schoolSession.schoolSessionID"/>
       <input type="text" class="form-control" name="schoolSessionName" #schoolSessionName="ngModel" [(ngModel)]="schoolSession.schoolSessionName" required>
     </div>
+    <div class="form-group col-md-3">
+        <label for="isActive">Active</label>
+        <select class="form-control" name="isActive" #isActive="ngModel" [(ngModel)]="schoolSession.isActive" required>
+            <option value="N">No</option>
+            <option value="Y">Yes</option>
+        </select>
+    </div>
     <div class="form-group col-md-1">
         <label for="">&nbsp;</label>
         <button [disabled]="!sessionForm.valid" type="button" class="btn btn-block btn-info" (click)="onAdd()" title="Add to list"><i class="fa fa-plus"></i></button>

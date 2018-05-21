@@ -6,11 +6,14 @@ import { ApiService } from './api.service';
 import { HttpHeaders } from '@angular/common/http';
 import * as decode from 'jwt-decode';
 import {SESSION_STORAGE, LOCAL_STORAGE, WebStorageService} from 'angular-webstorage-service';
+import { HandleAPIService } from './handle-api.service';
 
 @Injectable()
 export class AuthService {
     tokenData: any;
-    constructor( @Inject(SESSION_STORAGE) private storage: WebStorageService, private api: ApiService) { }
+    constructor(
+      @Inject(SESSION_STORAGE) private storage: WebStorageService,
+      private api: ApiService) { }
 
     login(accountInfo: any) {
       const httpOptions = {
@@ -24,11 +27,12 @@ export class AuthService {
     }
     removeToken() {
       this.storage.remove('token');
+      this.storage.remove('isAdmin');
     }
     saveInLocal(key, val): void {
         // console.log('recieved= key:' + key + 'value:' + val);
         this.storage.set(key, val);
-      }
+    }
     getFromLocal(key): string {
       // console.log('recieved= key:' + key);
       return this.storage.get(key);
@@ -62,6 +66,30 @@ export class AuthService {
       } else {
         return false;
       }
-
+    }
+    getByID(id: number, url: string) {
+      const token = this.getFromLocal('token');
+      const headerOption = new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'bearer ' + token
+      });
+      const httpOptions = {
+        // headers: new HttpHeaders({ 'Content-Type': 'application/json' }) text/plain
+        headers: headerOption
+      };
+      const body = '';
+      // const requestOptions = new HttpRequest(({method: RequestMethod.Post, headers: headerOption});
+      const seq = this.api.get(url + '/' + id, body, httpOptions);
+      return seq;
+    }
+    getUserRole() {
+      const userID = this.getUserID();
+      this.getByID(userID, 'api/Users').subscribe(
+        (data: any) => {
+          const user = data;
+          // console.log(user);
+          this.saveInLocal('isAdmin', user.isAdmin);
+        }
+      );
     }
 }

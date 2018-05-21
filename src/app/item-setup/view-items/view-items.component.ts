@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Item } from '../../shared/models/invoice';
-import { ItemService } from '../../shared/services/item.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../shared/services/auth.service';
 import { Observable } from 'rxjs';

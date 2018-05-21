@@ -10,10 +10,20 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   userName: string;
-  constructor(private auth: AuthService, private router: Router) { }
+  isAdmin: boolean;
+  admin: string;
+  constructor(private auth: AuthService, private router: Router) {
+    this.admin = this.auth.getFromLocal('isAdmin');
+    // console.log(admin);
+    this.isAdmin = this.admin === 'Y' ? true : false;
+  }
 
   ngOnInit() {
     this.userName = this.auth.getUserName();
+    this.admin = this.auth.getFromLocal('isAdmin');
+    // console.log(admin);
+    this.isAdmin = this.admin === 'Y' ? true : false;
+    // console.log(this.isAdmin);
   }
 
   logout() {

@@ -1,9 +1,10 @@
 export class User {
-    UserID: number;
-    UserName: string;
-    FirstName: string;
-    LastName: string;
-    UserPassword: string;
-    IsAdmin: boolean;
-    CreatedByID: number;
+    userID = 0;
+    userName: string;
+    firstName: string;
+    lastName: string;
+    resetPassword: string;
+    isAdmin: string;
+    isActive: string;
+    createdByID: number;
 }

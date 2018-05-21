@@ -29,14 +29,8 @@ import { LoginComponent } from './login/login.component';
 import { ItemSetupComponent } from './item-setup/item-setup.component';
 import { UserComponent } from './User/user/user.component';
 import { ApiService } from './shared/services/api.service';
-import { ItemService } from './shared/services/item.service';
 import { AuthService } from './shared/services/auth.service';
-import { CompanyService } from './shared/services/company.service';
 import { HandleErrorService } from './shared/services/handle-error.service';
-import { PriceListService } from './shared/services/price-list.service';
-import { SchoolSessionService } from './shared/services/school-session.service';
-import { SchoolTermService } from './shared/services/school-term.service';
-import { StudentClassService } from './shared/services/student-class.service';
 import { UtilService } from './shared/services/util.service';
 import { StorageServiceModule } from 'angular-webstorage-service';
 import { HttpClientModule } from '@angular/common/http';
@@ -77,15 +71,10 @@ import { HandleAPIService } from './shared/services/handle-api.service';
     ToastrModule.forRoot(),
     StorageServiceModule
   ],
-  providers: [ApiService,
-    ItemService,
+  providers: [
+    ApiService,
     AuthService,
-    CompanyService,
     HandleErrorService,
-    PriceListService,
-    SchoolSessionService,
-    SchoolTermService,
-    StudentClassService,
     UtilService,
     HandleAPIService
   ],

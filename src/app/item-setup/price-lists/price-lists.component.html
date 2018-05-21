@@ -5,41 +5,47 @@
       <input type="hidden" id="priceListID" name="priceListID" #priceListID="ngModel" [(ngModel)]="priceList.priceListID"/>
       <input type="text" class="form-control" name="priceDescription" #priceDescription="ngModel" [(ngModel)]="priceList.priceDescription" required>
     </div>
-    <div class="form-group col-md-5">
+    <div class="form-group col-md-7">
       <label for="itemID">Item Description</label>
       <!-- <input class="form-control" name="ItemCode" #ItemCode="ngModel" [(ngModel)]="invoiceDetail.ItemCode" placeholder="Item Code" required> -->
       <select class="form-control" name="itemID" #itemID="ngModel" [(ngModel)]="priceList.itemID" required>
-        <option *ngFor="let item of items" value="{{item.itemID}}">{{item.itemName}}</option>
+        <!-- <option value=""></option> -->
+        <option *ngFor="let itm of item" value="{{itm.itemID}}">{{itm.itemName}}</option>
       </select>
       <!-- <div class="validation-error" *ngIf="ItemCode.invalid && ItemCode.touched">This field is required</div> -->
     </div>
-    <div class="form-group col-md-2">
+    
+  </div>
+<div class="row">
+  <div class="form-group col-md-3">
       <label for="schoolSessionID">Session</label>
       <!-- <input class="form-control" name="SchoolSession" #SchoolSession="ngModel" [(ngModel)]="invoice.SchoolSession"> -->
       <select class="form-control" name="schoolSessionID" #schoolSessionID="ngModel" [(ngModel)]="priceList.schoolSessionID" required>
-          <option *ngFor="let ss of schoolSession" value="{{ss.schoolSessionID}}">{{ss.schoolSessionName}}</option>
+        <!-- <option value=""></option>  -->
+        <option *ngFor="let ss of schoolSession" value="{{ss.schoolSessionID}}">{{ss.schoolSessionName}}</option>
       </select>
     </div>
-  </div>
-<div class="row">
-    
-  <div class="form-group col-md-4">
+  <div class="form-group col-md-3">
     <label for="schoolTermID">Term</label>
     <select class="form-control" name="schoolTermID" #schoolTermID="ngModel" [(ngModel)]="priceList.schoolTermID" required>
-        <option *ngFor="let st of schoolTerm" value="{{st.schoolTermID}}">{{st.schoolTermName}}</option>
+      <!-- <option value=""></option>   -->
+      <option *ngFor="let st of schoolTerm" value="{{st.schoolTermID}}">{{st.schoolTermName}}</option>
     </select>
   </div>
-  <div class="form-group col-md-4">
+  <div class="form-group col-md-3">
     <label for="studentClassID">Class</label>
     <!-- <input type="text" class="form-control" name="StudentClass" #StudentClass="ngModel" [(ngModel)]="invoice.StudentClass" placeholder="Class"> -->
     <select class="form-control" name="studentClassID" #studentClassID="ngModel" [(ngModel)]="priceList.studentClassID" required>
-        <option *ngFor="let sc of studentClass" value="{{sc.studentClassID}}">{{sc.studentClassName}}</option>
+      <!-- <option value=""></option>   -->
+      <option *ngFor="let sc of studentClass" value="{{sc.studentClassID}}">{{sc.studentClassName}}</option>
     </select>
   </div>
-  <div class="form-group col-md-4">
+  
+  <div class="form-group col-md-3">
     <label for="unitPrice">Unit Price</label>
     <input type="number" min="0" class="form-control" name="unitPrice" #unitPrice="ngModel" [(ngModel)]="priceList.unitPrice" required>
   </div>
+  
 </div> 
 <div class="row">
     <div class="form-group col-md-4">
@@ -48,7 +54,7 @@
       <button [disabled]="!priceForm.valid" type="button" class="btn btn-block btn-info" (click)="onAdd()" title="Add to list"><i class="fa fa-plus"></i> Add</button>
     </div>
     <div class="form-group col-md-2">
-      <button type="button" class="btn btn-block btn-secondary" (click)="resetForm()" title="Clear form"><i class="fa fa-repeat"></i> Reset</button>
+      <button type="button" class="btn btn-block btn-secondary" (click)="getPriceLists(priceForm)" title="Clear form"><i class="fa fa-repeat"></i> Reset</button>
     </div>
     <div class="form-group col-md-4">
     </div>
@@ -67,31 +73,31 @@
           <td align="right"><strong>Action</strong></td>
         </thead>
         <tbody>
-          <tr *ngFor="let price of priceLists">
+          <tr *ngFor="let price of priceListView">
             <td>
               {{price.priceDescription}}
             </td>
             <td>
-              {{price.itemID}}
+              {{price.itemName}}
             </td>
             <td>
-              {{price.schoolSessionID}}
+              {{price.schoolSessionName}}
             </td>
             <td>
-              {{price.studentClassID}}
+              {{price.studentClassName}}
             </td>
             <td>
-              {{price.schoolTermID}}
+              {{price.schoolTermName}}
             </td>
             <td>
-              {{price.unitPrice | currency : "NGN" : 2}}
+              {{price.unitPrice | currency : "NGN"}}
             </td>
             <td align="right">
               <a class="btn btn-primary" (click)="showForEdit(price)" >
                 <i class="fa fa-pencil text-white"></i>
               </a>
               <a class="btn btn-danger">
-                  <i class="fa fa-trash-o text-white"></i>
+                  <i class="fa fa-trash-o text-white" (click)="removePriceList(price)"></i>
                 </a>
             </td>
           </tr>

@@ -43,10 +43,10 @@ export class StudentClassComponent implements OnInit {
             this.getStudentClass();
           },
           error => {
-            if (error.object) {
-              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-            } else {
+            if (typeof error === 'string') {
               this.toastr.warning(error, 'Oops! An error occurred');
+            } else {
+              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
             }
           }
         );
@@ -58,10 +58,10 @@ export class StudentClassComponent implements OnInit {
             this.getStudentClass();
           },
           error => {
-            if (error.object) {
-              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-            } else {
+            if (typeof error === 'string') {
               this.toastr.warning(error, 'Oops! An error occurred');
+            } else {
+              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
             }
           }
         );
@@ -73,10 +73,10 @@ export class StudentClassComponent implements OnInit {
           this.studentClass = data;
         },
         error => {
-          if (error.object) {
-            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-          } else {
+          if (typeof error === 'string') {
             this.toastr.warning(error, 'Oops! An error occurred');
+          } else {
+            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
           }
         }
     );
@@ -91,10 +91,10 @@ export class StudentClassComponent implements OnInit {
             console.log(data);
           },
           error => {
-            if (error.object) {
-              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-            } else {
+            if (typeof error === 'string') {
               this.toastr.warning(error, 'Oops! An error occurred');
+            } else {
+              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
             }
           }
       );
@@ -104,14 +104,14 @@ export class StudentClassComponent implements OnInit {
     this.studentClass = new StudentClass();
     this.handleAPI.get(this.endpoint)
       .subscribe( (data: any) => {
-        // console.log(data);
+          // console.log(data);
           this.studentClasses = data;
         },
         error => {
-          if (error.object) {
-            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-          } else {
+          if (typeof error === 'string') {
             this.toastr.warning(error, 'Oops! An error occurred');
+          } else {
+            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
           }
         }
     );

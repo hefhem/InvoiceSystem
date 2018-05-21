@@ -24,14 +24,29 @@ export class InvoiceDetail {
 }
 
 export class PriceList {
-    priceID = 0;
-    priceDesc = '';
-    schoolSessionID = '';
-    studentClassID = '';
-    schoolTermID = '';
-    itemID = '';
+    priceListID = 0;
+    priceDescription = '';
+    schoolSessionID = 0;
+    studentClassID = 0;
+    schoolTermID = 0;
+    itemID = 0;
     unitPrice = 0;
     createdByID: number;
+  }
+
+  export class PriceListView {
+    PriceListID: number;
+    PriceDescription: string;
+    SchoolSessionID: number;
+    SchoolSessionName: string;
+    StudentClassID: number;
+    StudentClassName: string;
+    SchoolTermID: number;
+    SchoolTermName: string;
+    ItemID: number;
+    ItemName: string;
+    UnitPrice: number;
+    CreatedByID: number;
   }
 
   export class Item {
@@ -48,6 +63,7 @@ export class PriceList {
 
   export class SchoolSession {
       schoolSessionID = 0;
+      isActive: string;
       schoolSessionName: string;
       createdByID: number;
   }
