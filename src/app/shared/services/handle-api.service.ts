@@ -97,4 +97,21 @@ export class HandleAPIService {
     return seq;
   }
 
+  deleteWithUserID(id: number, url: string, userID: number) {
+    const token = this.authService.getFromLocal('token');
+    const headerOption = new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': 'bearer ' + token
+    });
+    const httpOptions = {
+      // headers: new HttpHeaders({ 'Content-Type': 'application/json' }) text/plain
+      headers: headerOption
+    };
+    const body = '';
+    // const requestOptions = new HttpRequest(({method: RequestMethod.Post, headers: headerOption});
+    const seq = this.api.delete(url + '/' + id + '?userID=' + userID, httpOptions);
+
+    return seq;
+  }
+
 }

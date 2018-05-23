@@ -13,6 +13,7 @@ import { ViewItemsComponent } from './item-setup/view-items/view-items.component
 import { LoginComponent } from './login/login.component';
 import { ItemSetupComponent } from './item-setup/item-setup.component';
 import { UserComponent } from './User/user/user.component';
+import { PrintInvoiceComponent } from './invoice/print-invoice/print-invoice.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,10 @@ const routes: Routes = [
   {
     path: 'view-invoice',
     component: ViewInvoiceComponent
+  },
+  {
+    path: 'print-invoice/:id',
+    component: PrintInvoiceComponent
   },
   {
     path: 'master-data',

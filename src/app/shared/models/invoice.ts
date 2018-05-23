@@ -1,13 +1,16 @@
 export class Invoice {
-    invoiceID = 0;
+    invoiceMasterID = 0;
     invoiceNumber: string;
     invoiceDate: string;
+    customerCode: string;
     customerName: string;
+    isCancelled: boolean;
     invoiceTotal = 0;
     schoolTermID: number;
     schoolSessionID: number;
     studentClassID: number;
     discount = 0;
+    discountAmount = 0;
     status: string;
     invoiceTotalBeforeDiscount = 0;
     createdByID: number;
@@ -17,10 +20,29 @@ export class InvoiceDetail {
     invoiceID: number;
     itemID: number;
     itemName: string;
-    Qty: number;
+    qty: number;
     unitPrice: number;
     lineTotal = 0;
     createdByID: number;
+}
+
+export class InvoiceFull {
+    invoiceID = 0;
+    invoiceNumber: string;
+    invoiceDate: string;
+    customerCode: string;
+    customerName: string;
+    isCancelled: boolean;
+    invoiceTotal = 0;
+    schoolTermID: number;
+    schoolSessionID: number;
+    studentClassID: number;
+    discount = 0;
+    discountAmount = 0;
+    status: string;
+    invoiceTotalBeforeDiscount = 0;
+    createdByID: number;
+    invoiceDetails: InvoiceDetail[];
 }
 
 export class PriceList {

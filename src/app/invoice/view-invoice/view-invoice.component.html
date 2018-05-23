@@ -9,32 +9,36 @@
     <div class="col-md-12">
       <table class="table table-sm table-hover">
         <thead>
-          <td>Item Description</td>
-          <td>Qty</td>
-          <td>Price</td>
+          <td>Invoice Number</td>
+          <td>Date</td>
+          <td>Customer Name</td>
           <td>Total</td>
+          <td>Status</td>
           <td>Action</td>
         </thead>
         <tbody>
           <tr *ngFor="let idt of InvoiceArray">
             <td>
-              {{idt.ItemCode}} - {{idt.ItemName}}
+              {{idt.invoiceNumber}}
             </td>
             <td>
-              {{idt.Qty}}
+              {{idt.invoiceDate | date:'dd-MM-yyyy'}}
             </td>
             <td>
-              {{idt.UnitPrice | currency : "NGN" : 2}}
+              {{idt.customerName}}
             </td>
             <td>
-              {{idt.LineTotal | currency : "NGN" : 2}}
+              {{idt.invoiceTotal | currency : "NGN"}}
             </td>
             <td>
-              <a class="btn btn-primary" (click)="showForEdit(idt)" >
-                <i class="fa fa-print-o"></i>
+                {{idt.status}}
+              </td>
+            <td>
+              <a *ngIf="idt.status=='Open'" class="btn btn-primary text-white" [routerLink]="['/print-invoice', idt.invoiceMasterID]" >
+                <i class="fa fa-print"></i>
               </a>
-              <a class="btn btn-danger">
-                  <i class="fa fa-trash-o"></i>
+              <a *ngIf="idt.status=='Open'" class="btn btn-danger text-white" (click)="reverseInvoice(idt)">
+                  <i class="fa fa-ban"></i>
                 </a>
             </td>
         

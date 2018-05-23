@@ -5,80 +5,87 @@
     PAYMENT INVOICE
   </h2>
 </div>
+<div class="alert alert-success alert-dismissible text-center" *ngIf="print">
+  Invoice {{ invID }} Created! <a class="btn btn-primary text-white" [routerLink]="['/print-invoice', invID]">Print</a>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 <div class="row">
   <div class="col-md-12">
     <form class="inv-form" #invoiceForm="ngForm" (ngSubmit)="onSubmit(invoiceForm)">
       <div class="form-row">
-          <input type="hidden" name="InvoiceID" #InvoiceID="ngModel" [(ngModel)]="invoice.InvoiceID">
+          <input type="hidden" name="invoiceID" #invoiceID="ngModel" [(ngModel)]="invoice.invoiceID">
           <div class="form-group col-md-6">
-            <label for="CustomerName">Customer Name</label>
-            <input class="form-control" name="CustomerName" #CustomerName="ngModel" [(ngModel)]="invoice.CustomerName" placeholder="Customer Name" required>
+            <label for="customerName">Customer Name</label>
+            <input class="form-control" name="customerName" #customerName="ngModel" [(ngModel)]="invoice.customerName" placeholder="Customer Name" required>
               <!-- <div class="validation-error" *ngIf="CustomerName.invalid && CustomerName.touched">This field is required</div> -->
           </div>
           <div class="form-group col-md-2"></div>
           <div class="form-group col-md-2">
-              <label for="Status">Status</label>
-              <input disabled class="form-control" name="Status" #Status="ngModel" [(ngModel)]="invoice.Status">
+              <label for="status">Status</label>
+              <input disabled class="form-control" name="status" #status="ngModel" [(ngModel)]="invoice.status">
           </div>
           <div class="form-group form-group col-md-2">
-              <label for="InvoiceNumber">Invoice No.</label>
-              <input disabled class="form-control" name="InvoiceNumber" #InvoiceNumber="ngModel" [(ngModel)]="invoice.InvoiceNumber">
+              <label for="invoiceNumber">Invoice No.</label>
+              <input disabled class="form-control" name="invoiceNumber" #invoiceNumber="ngModel" [(ngModel)]="invoice.invoiceNumber">
           </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-2">
-            <label for="SchoolSessionID">Session</label>
+            <label for="schoolSessionID">Session</label>
             <!-- <input class="form-control" name="SchoolSession" #SchoolSession="ngModel" [(ngModel)]="invoice.SchoolSession"> -->
-            <select class="form-control" name="SchoolSessionID" #SchoolSessionID="ngModel" [(ngModel)]="invoice.SchoolSessionID" required>
-                <option *ngFor="let ss of schoolSession" value="{{ss.SchoolSessionID}}">{{ss.SchoolSessionName}}</option>
+            <select class="form-control" name="schoolSessionID" #schoolSessionID="ngModel" [(ngModel)]="invoice.schoolSessionID" required>
+                <!-- <option  value=""></option> -->
+                <option *ngFor="let ss of schoolSession" value="{{ss.schoolSessionID}}">{{ss.schoolSessionName}}</option>
             </select>
         </div>
         <div class="form-group col-md-2">
-            <label for="StudentClassID">Class</label>
+            <label for="studentClassID">Class</label>
             <!-- <input type="text" class="form-control" name="StudentClass" #StudentClass="ngModel" [(ngModel)]="invoice.StudentClass" placeholder="Class"> -->
-            <select class="form-control" name="StudentClassID" #StudentClassID="ngModel" [(ngModel)]="invoice.StudentClassID" required>
-                <option *ngFor="let sc of studentClass" value="{{sc.StudentClassID}}">{{sc.StudentClassName}}</option>
+            <select class="form-control" name="studentClassID" #studentClassID="ngModel" [(ngModel)]="invoice.studentClassID" required>
+                <option *ngFor="let sc of studentClass" value="{{sc.studentClassID}}">{{sc.studentClassName}}</option>
             </select>
         </div>
         <div class="form-group col-md-2">
-          <label for="SchoolTermID">Term</label>
+          <label for="schoolTermID">Term</label>
           <!-- <input type="text" class="form-control" name="SchoolTerm" #SchoolTerm="ngModel" [(ngModel)]="invoice.SchoolTerm" placeholder="Term"> -->
-          <select class="form-control" name="SchoolTermID" #SchoolTermID="ngModel" [(ngModel)]="invoice.SchoolTermID" placeholder="Term" required>
-              <option *ngFor="let st of schoolTerm" value="{{st.SchoolTermID}}">{{st.SchoolTermName}}</option>
+          <select class="form-control" name="schoolTermID" #schoolTermID="ngModel" [(ngModel)]="invoice.schoolTermID" placeholder="Term" required>
+              <option *ngFor="let st of schoolTerm" value="{{st.schoolTermID}}">{{st.schoolTermName}}</option>
           </select>
         </div>
         <div class="form-group col-md-2"></div>
         <div class="form-group col-md-2">
-            <label for="InvoiceDate">Invoice Date</label>
-            <input type="date" class="form-control" name="InvoiceDate" #InvoiceDate="ngModel" [(ngModel)]="invoice.InvoiceDate" placeholder="Invoice Date" required>
+            <label for="invoiceDate">Invoice Date</label>
+            <input type="date" class="form-control" name="invoiceDate" #invoiceDate="ngModel" [(ngModel)]="invoice.invoiceDate" placeholder="Invoice Date" required>
             <!-- <div class="validation-error" *ngIf="InvoiceDate.invalid && InvoiceDate.touched">This field is required</div> -->
         </div>
         <div class="form-group col-md-2">
-            <label for="Discount">Discount</label>
-            <input type="number" min="0" max="100" class="form-control" name="Discount" #Discount="ngModel" [(ngModel)]="invoice.Discount" (keyup)="calculateTotal()">
+            <label for="discount">Discount</label>
+            <input type="number" min="0" max="100" class="form-control" name="discount" #discount="ngModel" [(ngModel)]="invoice.discount" (keyup)="calculateTotal()">
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col-md-4">
-            <label for="ItemID">Item Description</label>
+            <label for="itemID">Item Description</label>
           <!-- <input class="form-control" name="ItemCode" #ItemCode="ngModel" [(ngModel)]="invoiceDetail.ItemCode" placeholder="Item Code" required> -->
-          <select class="form-control" name="ItemID" #ItemID="ngModel" [(ngModel)]="invoiceDetail.ItemID" required>
-            <option *ngFor="let item of items" value="{{item.ItemID}}">{{item.ItemName}}</option>
+          <select class="form-control" name="itemID" #itemID="ngModel" [(ngModel)]="invoiceDetail.itemID" required>
+            <option *ngFor="let item of items" value="{{item.itemID}}">{{item.itemName}}</option>
           </select>
           <!-- <div class="validation-error" *ngIf="ItemCode.invalid && ItemCode.touched">This field is required</div> -->
         </div>
         <div class="form-group col-md-1">
-            <label for="Qty">Qty</label>
-          <input type="number" min="1" class="form-control" name="Qty" #Qty="ngModel" [(ngModel)]="invoiceDetail.Qty" placeholder="Qty" required>
+            <label for="qty">Qty</label>
+          <input type="number" min="1" class="form-control" name="qty" #qty="ngModel" [(ngModel)]="invoiceDetail.qty" placeholder="Qty" required>
         </div>
         <div class="form-group col-md-2">
-            <label for="UnitPrice">Unit Price</label>
-          <input type="number" min="0" class="form-control" name="UnitPrice" #UnitPrice="ngModel" [(ngModel)]="invoiceDetail.UnitPrice" placeholder="Unit Price" required>
+            <label for="unitPrice">Unit Price</label>
+          <input type="number" min="0" class="form-control" name="unitPrice" #unitPrice="ngModel" [(ngModel)]="invoiceDetail.unitPrice" placeholder="Unit Price" required>
         </div>
         <div class="form-group col-md-2">
-            <label for="LineTotal">Line Total</label>
-          <input disabled class="form-control" name="LineTotal" #LineTotal="ngModel" [(ngModel)]="invoiceDetail.LineTotal" placeholder="LineTotal" value="{{ invoiceDetail.Qty * invoiceDetail.UnitPrice | currency : 'NGN'}}">
+            <label for="lineTotal">Line Total</label>
+          <input disabled class="form-control" name="lineTotal" #lineTotal="ngModel" [(ngModel)]="invoiceDetail.lineTotal" placeholder="LineTotal" value="{{ invoiceDetail.qty * invoiceDetail.unitPrice | currency : 'NGN'}}">
         </div>
         <div class="form-group col-md-1">
             <label for="">&nbsp;</label>
@@ -86,7 +93,7 @@
         </div>
         <div class="form-group col-md-1">
             <label for="">&nbsp;</label>
-            <button type="button" class="btn btn-block btn-secondary" (click)="resetForm()" title="Clear form"><i class="fa fa-repeat"></i></button>
+            <button type="button" class="btn btn-block btn-secondary" (click)="clear()" title="Clear form"><i class="fa fa-repeat"></i></button>
         </div>
       </div>
     </form>
@@ -105,16 +112,16 @@
       <tbody>
         <tr *ngFor="let idt of InvoiceArray">
           <td>
-            {{idt.ItemID}} - {{idt.ItemName}}
+            {{idt.itemName}}
           </td>
           <td>
-            {{idt.Qty}}
+            {{idt.qty}}
           </td>
           <td>
-            {{idt.UnitPrice | currency : "NGN"}}
+            {{idt.unitPrice | currency : "NGN"}}
           </td>
           <td>
-            {{idt.LineTotal | currency : "NGN"}}
+            {{idt.lineTotal | currency : "NGN"}}
           </td>
           <td>
             <!-- <a class="btn btn-primary" (click)="showForEdit(idt)" >
@@ -149,7 +156,7 @@
     <div class="form-group col-md-4" style="border: 1px solid; border-radius: 4px;">
         <div class="row">
         <div class="col-md-6">Total Before Discount: </div>
-        <div class="col-md-6">{{ invoiceTotal | currency : "NGN"}}</div>
+        <div class="col-md-6">{{ invoiceTotalBeforeDiscount | currency : "NGN"}}</div>
         </div>
     </div>
 </div>
@@ -160,7 +167,7 @@
     <div class="form-group col-md-4" style="border: 1px solid; border-radius: 4px;">
         <div class="row">
         <div class="col-md-6">Total After Discount: </div>
-        <div class="col-md-6">{{ invoiceTotalAfterDiscount | currency : "NGN"}}</div>
+        <div class="col-md-6">{{ invoiceTotal | currency : "NGN"}}</div>
         </div>
     </div>
 </div>

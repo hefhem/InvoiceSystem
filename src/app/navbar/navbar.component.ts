@@ -13,22 +13,24 @@ export class NavbarComponent implements OnInit {
   isAdmin: boolean;
   admin: string;
   constructor(private auth: AuthService, private router: Router) {
-    this.admin = this.auth.getFromLocal('isAdmin');
-    // console.log(admin);
-    this.isAdmin = this.admin === 'Y' ? true : false;
+    this.getUserRole();
   }
 
   ngOnInit() {
-    this.userName = this.auth.getUserName();
-    this.admin = this.auth.getFromLocal('isAdmin');
-    // console.log(admin);
-    this.isAdmin = this.admin === 'Y' ? true : false;
-    // console.log(this.isAdmin);
+    this.getUserRole();
   }
 
   logout() {
     this.auth.removeToken();
     this.router.navigate(['/login']);
+  }
+
+  getUserRole() {
+    this.userName = this.auth.getUserName();
+    this.admin = this.auth.getFromLocal('isAdmin');
+    // console.log(admin);
+    this.isAdmin = this.admin !== 'Y' ? false : true;
+    // console.log(this.isAdmin);
   }
 
 }

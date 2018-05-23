@@ -17,10 +17,22 @@ button:hover, a.btn:hover{
     margin-top: 10%;
     background-color: #007bff;
 }
+.div-per-inv{
+    text-align: center; 
+    margin-top: 10%;
+    background-color: #fff;
+}
 .h-per {
     border-radius: 4px; 
     padding: 2%;
     background-color: #007bff!important;
+}
+.h-per-inv {
+    border-radius: 4px; 
+    padding: 2%;
+    background-color: #fff!important;
+    color: black;
+    
 }
 .ng-valid[required], .ng-valid.required  {
     border-left: 5px solid #42A948; /* green */

@@ -35,6 +35,7 @@ import { UtilService } from './shared/services/util.service';
 import { StorageServiceModule } from 'angular-webstorage-service';
 import { HttpClientModule } from '@angular/common/http';
 import { HandleAPIService } from './shared/services/handle-api.service';
+import { PrintInvoiceComponent } from './invoice/print-invoice/print-invoice.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { HandleAPIService } from './shared/services/handle-api.service';
     StudentClassComponent,
     LoginComponent,
     ItemSetupComponent,
-    UserComponent
+    UserComponent,
+    PrintInvoiceComponent
   ],
   imports: [
     BrowserModule,
