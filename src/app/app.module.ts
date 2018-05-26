@@ -7,6 +7,7 @@ import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { DataTablesModule } from 'angular-datatables';
 
 import { AppComponent } from './app.component';
 import { EmployeesComponent } from './employees/employees.component';
@@ -36,6 +37,8 @@ import { StorageServiceModule } from 'angular-webstorage-service';
 import { HttpClientModule } from '@angular/common/http';
 import { HandleAPIService } from './shared/services/handle-api.service';
 import { PrintInvoiceComponent } from './invoice/print-invoice/print-invoice.component';
+import { ResetPasswordComponent } from './User/reset-password/reset-password.component';
+import { ChangePasswordComponent } from './User/change-password/change-password.component';
 
 
 @NgModule({
@@ -60,7 +63,9 @@ import { PrintInvoiceComponent } from './invoice/print-invoice/print-invoice.com
     LoginComponent,
     ItemSetupComponent,
     UserComponent,
-    PrintInvoiceComponent
+    PrintInvoiceComponent,
+    ResetPasswordComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -69,6 +74,7 @@ import { PrintInvoiceComponent } from './invoice/print-invoice/print-invoice.com
     HttpModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    DataTablesModule,
     Ng2SearchPipeModule,
     ToastrModule.forRoot(),
     StorageServiceModule

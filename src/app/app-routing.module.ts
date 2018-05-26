@@ -14,6 +14,8 @@ import { LoginComponent } from './login/login.component';
 import { ItemSetupComponent } from './item-setup/item-setup.component';
 import { UserComponent } from './User/user/user.component';
 import { PrintInvoiceComponent } from './invoice/print-invoice/print-invoice.component';
+import { ResetPasswordComponent } from './User/reset-password/reset-password.component';
+import { ChangePasswordComponent } from './User/change-password/change-password.component';
 
 const routes: Routes = [
   {
@@ -55,6 +57,15 @@ const routes: Routes = [
   {
     path: 'user-settings',
     component: UserComponent
+  },
+  {
+    path: 'reset-password/:id',
+    component: ResetPasswordComponent
+  }
+  ,
+  {
+    path: 'change-password',
+    component: ChangePasswordComponent
   }
 ];
 

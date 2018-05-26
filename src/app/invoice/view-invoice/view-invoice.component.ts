@@ -4,6 +4,9 @@ import { HandleAPIService } from '../../shared/services/handle-api.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/services/auth.service';
+import { Subject } from 'rxjs';
+
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-view-invoice',
@@ -11,9 +14,11 @@ import { AuthService } from '../../shared/services/auth.service';
   styleUrls: ['./view-invoice.component.css']
 })
 export class ViewInvoiceComponent implements OnInit {
+  dtOptions: DataTables.Settings = {};
   endpoint = 'api/Invoice';
   InvoiceArray: Invoice[] = [];
   userID: any;
+  dtTrigger: Subject<any> = new Subject();
   constructor(
     private handleAPI: HandleAPIService,
     private toastr: ToastrService,
@@ -21,6 +26,15 @@ export class ViewInvoiceComponent implements OnInit {
   private auth: AuthService) { }
 
   ngOnInit() {
+    const tv = this.auth.isTokenValid();
+    if (!tv) {
+        this.router.navigate(['/login']);
+        return;
+    }
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10
+    };
     this.userID = this.auth.getUserID();
     this.getInvoices();
   }
@@ -31,6 +45,7 @@ export class ViewInvoiceComponent implements OnInit {
       .subscribe( (data: any) => {
           // console.log(data);
           this.InvoiceArray = data;
+          this.dtTrigger.next();
         },
         error => {
           if (typeof error === 'string') {

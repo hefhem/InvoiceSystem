@@ -35,7 +35,7 @@
         <div class="form-group col-md-2">
             <label for="schoolSessionID">Session</label>
             <!-- <input class="form-control" name="SchoolSession" #SchoolSession="ngModel" [(ngModel)]="invoice.SchoolSession"> -->
-            <select class="form-control" name="schoolSessionID" #schoolSessionID="ngModel" [(ngModel)]="invoice.schoolSessionID" required>
+            <select class="form-control" name="schoolSessionID" #schoolSessionID="ngModel" [(ngModel)]="invoice.schoolSessionID" (change)="onChange('class')" required>
                 <!-- <option  value=""></option> -->
                 <option *ngFor="let ss of schoolSession" value="{{ss.schoolSessionID}}">{{ss.schoolSessionName}}</option>
             </select>
@@ -43,14 +43,14 @@
         <div class="form-group col-md-2">
             <label for="studentClassID">Class</label>
             <!-- <input type="text" class="form-control" name="StudentClass" #StudentClass="ngModel" [(ngModel)]="invoice.StudentClass" placeholder="Class"> -->
-            <select class="form-control" name="studentClassID" #studentClassID="ngModel" [(ngModel)]="invoice.studentClassID" required>
+            <select class="form-control" name="studentClassID" #studentClassID="ngModel" [(ngModel)]="invoice.studentClassID" (change)="onChange('term')" [disabled]="!enableCls" required>
                 <option *ngFor="let sc of studentClass" value="{{sc.studentClassID}}">{{sc.studentClassName}}</option>
             </select>
         </div>
         <div class="form-group col-md-2">
           <label for="schoolTermID">Term</label>
           <!-- <input type="text" class="form-control" name="SchoolTerm" #SchoolTerm="ngModel" [(ngModel)]="invoice.SchoolTerm" placeholder="Term"> -->
-          <select class="form-control" name="schoolTermID" #schoolTermID="ngModel" [(ngModel)]="invoice.schoolTermID" placeholder="Term" required>
+          <select class="form-control" name="schoolTermID" #schoolTermID="ngModel" [(ngModel)]="invoice.schoolTermID" placeholder="Term" (change)="onChange('item')" [disabled]="!enableTerm" required>
               <option *ngFor="let st of schoolTerm" value="{{st.schoolTermID}}">{{st.schoolTermName}}</option>
           </select>
         </div>
@@ -62,7 +62,7 @@
         </div>
         <div class="form-group col-md-2">
             <label for="discount">Discount</label>
-            <input type="number" min="0" max="100" class="form-control" name="discount" #discount="ngModel" [(ngModel)]="invoice.discount" (keyup)="calculateTotal()">
+            <input type="number" [min]="0" [max]="100" class="form-control" name="discount" #discount="ngModel" [(ngModel)]="invoice.discount" (keyup)="calculateTotal()">
         </div>
       </div>
 
@@ -70,18 +70,18 @@
         <div class="form-group col-md-4">
             <label for="itemID">Item Description</label>
           <!-- <input class="form-control" name="ItemCode" #ItemCode="ngModel" [(ngModel)]="invoiceDetail.ItemCode" placeholder="Item Code" required> -->
-          <select class="form-control" name="itemID" #itemID="ngModel" [(ngModel)]="invoiceDetail.itemID" required>
+          <select class="form-control" name="itemID" #itemID="ngModel" [(ngModel)]="invoiceDetail.itemID" (change)="onChangeItem()" [disabled]="!enableItem" required>
             <option *ngFor="let item of items" value="{{item.itemID}}">{{item.itemName}}</option>
           </select>
           <!-- <div class="validation-error" *ngIf="ItemCode.invalid && ItemCode.touched">This field is required</div> -->
         </div>
         <div class="form-group col-md-1">
             <label for="qty">Qty</label>
-          <input type="number" min="1" class="form-control" name="qty" #qty="ngModel" [(ngModel)]="invoiceDetail.qty" placeholder="Qty" required>
+          <input type="number" [min]="1" class="form-control" name="qty" #qty="ngModel" [(ngModel)]="invoiceDetail.qty" placeholder="Qty" required>
         </div>
         <div class="form-group col-md-2">
             <label for="unitPrice">Unit Price</label>
-          <input type="number" min="0" class="form-control" name="unitPrice" #unitPrice="ngModel" [(ngModel)]="invoiceDetail.unitPrice" placeholder="Unit Price" required>
+          <input type="number" [min]="0" class="form-control" name="unitPrice" #unitPrice="ngModel" [(ngModel)]="invoiceDetail.unitPrice" placeholder="Unit Price" disabled required>
         </div>
         <div class="form-group col-md-2">
             <label for="lineTotal">Line Total</label>
@@ -127,7 +127,7 @@
             <!-- <a class="btn btn-primary" (click)="showForEdit(idt)" >
               <i class="fa fa-pencil-square-o"></i>
             </a> -->
-            <a class="btn btn-danger" (click)="onRemove(idt)">
+            <a class="btn btn-danger text-white" (click)="onRemove(idt)">
                 <i class="fa fa-trash-o"></i>
               </a>
           </td>

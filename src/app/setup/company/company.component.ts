@@ -21,12 +21,17 @@ export class CompanyComponent implements OnInit {
     private handleAPI: HandleAPIService,
     private toastr: ToastrService,
     private authService: AuthService,
-  private route: Router) { }
+  private router: Router) { }
 
   ngOnInit() {
     const tv = this.authService.isTokenValid();
     if (!tv) {
-        this.route.navigate(['/login']);
+        this.router.navigate(['/login']);
+    }
+    if (!this.authService.isAdmin()) {
+      // this.toastr.warning('', 'Access Denied!');
+      // this.router.navigate(['']);
+        return;
     }
     this.userID = this.authService.getUserID();
     this.getCompany();

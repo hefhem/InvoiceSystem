@@ -11,7 +11,7 @@ export class Invoice {
     studentClassID: number;
     discount = 0;
     discountAmount = 0;
-    status: string;
+    status = 'Open';
     invoiceTotalBeforeDiscount = 0;
     createdByID: number;
 }
@@ -57,18 +57,18 @@ export class PriceList {
   }
 
   export class PriceListView {
-    PriceListID: number;
-    PriceDescription: string;
-    SchoolSessionID: number;
-    SchoolSessionName: string;
-    StudentClassID: number;
-    StudentClassName: string;
-    SchoolTermID: number;
-    SchoolTermName: string;
-    ItemID: number;
-    ItemName: string;
-    UnitPrice: number;
-    CreatedByID: number;
+    priceListID: number;
+    priceDescription: string;
+    schoolSessionID: number;
+    schoolSessionName: string;
+    studentClassID: number;
+    studentClassName: string;
+    schoolTermID: number;
+    schoolTermName: string;
+    itemID: number;
+    itemName: string;
+    unitPrice: number;
+    createdByID: number;
   }
 
   export class Item {

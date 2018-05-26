@@ -11,6 +11,7 @@ import { User } from '../shared/models/user';
 })
 export class LoginComponent implements OnInit {
   user: User = new User();
+  currentDate = new Date().getFullYear();
   account = {
     userName: '',
     password: ''
@@ -21,16 +22,30 @@ export class LoginComponent implements OnInit {
     private toast: ToastrService  ) { }
 
   ngOnInit() {
+    const tv = this.auth.isTokenValid();
+    if (tv) {
+        this.router.navigate(['']);
+        return;
+    }
   }
 
   doLogin() {
     this.auth.login(this.account).subscribe(
-      data => {
+      (data: any ) => {
         // console.log(data);
-        this.auth.saveInLocal('token', data);
-        this.auth.getUserRole();
-        this.toast.success('Authenticated!');
-        this.router.navigate(['']);
+        if (data.isSuccess) {
+          this.auth.saveInLocal('token', data.message);
+          this.auth.saveInLocal('id', data.id);
+          this.auth.saveInLocal('isAdmin', data.isAdmin);
+          this.toast.success('Authenticated!');
+          // window.location.href = '';
+          this.router.navigate(['']);
+        } else {
+          if (data.message === 'reset') {
+            this.toast.success('Reset your password!');
+            this.router.navigate(['/reset-password', data.id]);
+          }
+        }
       },
       error => {
         this.toast.error(error);

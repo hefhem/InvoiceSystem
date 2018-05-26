@@ -11,25 +11,41 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
   userName: string;
   isAdmin: boolean;
-  admin: string;
+  cls = 'd-none';
   constructor(private auth: AuthService, private router: Router) {
-    this.getUserRole();
+    // this.getUserRole();
+    // if (this.auth.isAdmin()) {
+    //   this.cls = '';
+    // }
+    // this.userName = this.auth.getUserName();
   }
 
   ngOnInit() {
-    this.getUserRole();
+    const tv = this.auth.isTokenValid();
+    if (!tv) {
+        this.router.navigate(['/login']);
+        return;
+    }
+    // console.log(this.auth.isAdmin());
+    if (this.auth.isAdmin()) {
+      this.cls = '';
+    }
+    this.userName = this.auth.getUserName();
+    // this.getUserRole();
   }
 
   logout() {
     this.auth.removeToken();
     this.router.navigate(['/login']);
+    window.location.href = '/';
   }
 
   getUserRole() {
+    if (!this.auth.isAdmin) {
+      this.cls = 'd-none';
+    }
     this.userName = this.auth.getUserName();
-    this.admin = this.auth.getFromLocal('isAdmin');
-    // console.log(admin);
-    this.isAdmin = this.admin !== 'Y' ? false : true;
+    // this.isAdmin = this.auth.isAdmin();
     // console.log(this.isAdmin);
   }
 

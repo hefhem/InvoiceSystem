@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { HandleAPIService } from '../../shared/services/handle-api.service';
 import { InvoiceFull, SchoolSession, StudentClass, SchoolTerm } from '../../shared/models/invoice';
 import { ToastrService } from 'ngx-toastr';
 import { Company } from '../../shared/models/company';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-print-invoice',
@@ -21,9 +22,16 @@ export class PrintInvoiceComponent implements OnInit {
   constructor(
       private route: ActivatedRoute,
       private handleAPI: HandleAPIService,
-    private toastr: ToastrService) { }
+      private toastr: ToastrService,
+      private authService: AuthService,
+      private router: Router ) { }
 
   ngOnInit() {
+    const tv = this.authService.isTokenValid();
+    if (!tv) {
+        this.router.navigate(['/login']);
+        return;
+    }
     this.id = this.route.snapshot.params['id'];
     this.getInvoice();
     console.log(this.invoice);

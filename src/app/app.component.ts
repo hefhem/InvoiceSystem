@@ -15,10 +15,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     const tv = this.authService.isTokenValid();
-    if (tv) {
-        this.route.navigate(['']);
-    } else {
+    if (!tv) {
         this.route.navigate(['/login']);
+    // } else {
+    //   this.route.navigate(['/login']);
     }
   }
 

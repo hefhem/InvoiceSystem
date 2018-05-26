@@ -28,6 +28,7 @@ export class AuthService {
     removeToken() {
       this.storage.remove('token');
       this.storage.remove('isAdmin');
+      this.storage.remove('id');
     }
     saveInLocal(key, val): void {
         // console.log('recieved= key:' + key + 'value:' + val);
@@ -40,8 +41,11 @@ export class AuthService {
     }
     decodeToken() {
       const tk = this.getFromLocal('token');
-      this.tokenData = decode(tk);
-      return this.tokenData;
+      if (tk) {
+        this.tokenData = decode(tk);
+        return this.tokenData;
+      }
+      return false;
     }
     getUserName() {
       const td = this.decodeToken();
@@ -67,7 +71,7 @@ export class AuthService {
         return false;
       }
     }
-    getByID(id: number, url: string) {
+    getByID(id: any, url: string) {
       const token = this.getFromLocal('token');
       const headerOption = new HttpHeaders({
         'Content-Type':  'application/json',
@@ -82,14 +86,7 @@ export class AuthService {
       const seq = this.api.get(url + '/' + id, body, httpOptions);
       return seq;
     }
-    getUserRole() {
-      const userID = this.getUserID();
-      this.getByID(userID, 'api/Users').subscribe(
-        (data: any) => {
-          const user = data;
-          // console.log(user);
-          this.saveInLocal('isAdmin', user.isAdmin);
-        }
-      );
+    isAdmin() {
+      return this.getFromLocal('isAdmin');
     }
-}
+  }

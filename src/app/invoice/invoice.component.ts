@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Invoice, InvoiceDetail, InvoiceFull } from '../shared/models/invoice';
+import { Invoice, InvoiceDetail, InvoiceFull, PriceListView, PriceList } from '../shared/models/invoice';
 import { HandleAPIService } from '../shared/services/handle-api.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../shared/services/auth.service';
@@ -22,6 +22,7 @@ export class InvoiceComponent implements OnInit {
   formReady = false;
   print = false;
   invID = 0;
+  cd = new Date();
   // = {
   //   InvoiceID: 0, ItemCode: '', ItemName: '', Qty: 0, UnitPrice: 0, LineTotal: 0
   // };
@@ -31,9 +32,13 @@ export class InvoiceComponent implements OnInit {
   studentClass = [];
   schoolTerm = [];
   schoolSession = [];
+  priceList: PriceList[] = [];
   endpoint = 'api/Invoice';
   tokenData: any;
   userID: any;
+  enableCls = false;
+  enableTerm = false;
+  enableItem = false;
 
   constructor(
     private handleAPI: HandleAPIService,
@@ -52,6 +57,18 @@ export class InvoiceComponent implements OnInit {
     this.getItems();
     this.getSchoolTerms();
     this.getStudentClass();
+    this.getPriceLists();
+  }
+  onChange(itm: string) {
+    if (itm === 'class') {
+      this.enableCls = true;
+    }
+    if (itm === 'term') {
+      this.enableTerm = true;
+    }
+    if (itm === 'item') {
+      this.enableItem = true;
+    }
   }
   resetForm(form?: NgForm) {
     if (form != null) {
@@ -65,11 +82,24 @@ export class InvoiceComponent implements OnInit {
       this.getItems();
       this.getSchoolTerms();
       this.getStudentClass();
+      this.getPriceLists();
   }
    clear() {
     this.invoiceDetail = new InvoiceDetail();
    }
   onAdd() {
+    if (this.invoice.discount < 0) {
+      this.toastr.error('Discount must be a positive value!');
+      return;
+    }
+    if (this.invoiceDetail.qty < 1) {
+      this.toastr.error('Quantity must be greater than 0');
+      return;
+    }
+    if (this.invoiceDetail.unitPrice < 1) {
+      this.toastr.error('Unit Price must be greater than 0');
+      return;
+    }
     this.invoiceDetail.lineTotal = this.invoiceDetail.qty * this.invoiceDetail.unitPrice;
     const itemid = this.invoiceDetail.itemID;
     // tslint:disable-next-line:triple-equals
@@ -91,6 +121,18 @@ export class InvoiceComponent implements OnInit {
     if (this.InvoiceArray.length < 1) {
       this.formReady = false;
     }
+  }
+  onChangeItem() {
+    this.invoiceDetail.unitPrice = 0;
+    // tslint:disable-next-line:triple-equals
+    const price = this.priceList.find(x => x.itemID == this.invoiceDetail.itemID
+                                    // tslint:disable-next-line:triple-equals
+                                    && x.schoolSessionID == this.invoice.schoolSessionID
+                                    // tslint:disable-next-line:triple-equals
+                                    && x.studentClassID == this.invoice.studentClassID
+                                    // tslint:disable-next-line:triple-equals
+                                    && x.schoolTermID == this.invoice.schoolTermID );
+    this.invoiceDetail.unitPrice = price.unitPrice;
   }
   calculateTotal() {
     this.invoiceTotal = 0;
@@ -206,6 +248,22 @@ export class InvoiceComponent implements OnInit {
             this.toastr.warning(error, 'Oops! An error occurred');
           } else {
             this.toastr.warning('Please check the console.', 'Oops! An error occurred');
+          }
+        }
+    );
+  }
+  getPriceLists() {
+    this.priceList = [];
+    this.handleAPI.get('api/PriceList')
+      .subscribe( (data: any) => {
+        // console.log(data);
+          this.priceList = data;
+        },
+        error => {
+          if (error.object) {
+            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
+          } else {
+            this.toastr.warning(error, 'Oops! An error occurred');
           }
         }
     );

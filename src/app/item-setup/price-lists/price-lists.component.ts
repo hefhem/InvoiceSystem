@@ -5,6 +5,9 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { Subject } from 'rxjs';
+
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-price-lists',
@@ -12,6 +15,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./price-lists.component.css']
 })
 export class PriceListsComponent implements OnInit {
+  dtOptions: DataTables.Settings = {};
   endpoint = 'api/PriceList';
   priceList: PriceList = new PriceList();
 
@@ -23,18 +27,28 @@ export class PriceListsComponent implements OnInit {
   item: Item[] = [];
 
   userID: any;
+  dtTrigger: Subject<any> = new Subject();
 
   constructor(
     private handleAPI: HandleAPIService,
     private toastr: ToastrService,
     private authService: AuthService,
-  private route: Router) { }
+  private router: Router) { }
 
   ngOnInit() {
     const tv = this.authService.isTokenValid();
     if (!tv) {
-        this.route.navigate(['/login']);
+        this.router.navigate(['/login']);
     }
+    if (!this.authService.isAdmin()) {
+      // this.toastr.warning('', 'Access Denied!');
+      // this.router.navigate(['']);
+        return;
+    }
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10
+    };
     this.userID = this.authService.getUserID();
     this.getPriceLists();
   }
@@ -119,6 +133,7 @@ export class PriceListsComponent implements OnInit {
       .subscribe( (data: any) => {
         // console.log(data);
           this.priceListView = data;
+          this.dtTrigger.next();
         },
         error => {
           if (error.object) {

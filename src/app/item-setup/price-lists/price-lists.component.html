@@ -60,17 +60,20 @@
     </div>
   </div>
 </form>
+<br/>
 <div class="row">
     <div class="col-md-12">
-      <table class="table table-sm table-hover">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover table table-sm table-hover">
         <thead>
-          <td><strong>Description</strong></td>
-          <td><strong>Item</strong></td>
-          <td><strong>Session</strong></td>
-          <td><strong>Class</strong></td>
-          <td><strong>Term</strong></td>
-          <td><strong>Unit Price</strong></td>
-          <td align="right"><strong>Action</strong></td>
+          <tr>
+            <th>Description</th>
+            <th>Item</th>
+            <th>Session</th>
+            <th>Class</th>
+            <th>Term</th>
+            <th>Unit Price</th>
+            <th align="right">Action</th>
+        </tr>
         </thead>
         <tbody>
           <tr *ngFor="let price of priceListView">
