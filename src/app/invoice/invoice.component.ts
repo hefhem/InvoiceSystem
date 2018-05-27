@@ -152,6 +152,10 @@ export class InvoiceComponent implements OnInit {
   }
 
   onSubmit(form?: NgForm) {
+    if (this.invoice.discount < 0) {
+      this.toastr.error('Discount must be a positive value!');
+      return;
+    }
     this.invoice.createdByID = this.userID;
     this.invoiceFull.invoiceID = 0;
     this.invoiceFull.invoiceNumber = this.invoice.invoiceNumber;

@@ -9,7 +9,7 @@
       <label for="itemID">Item Description</label>
       <!-- <input class="form-control" name="ItemCode" #ItemCode="ngModel" [(ngModel)]="invoiceDetail.ItemCode" placeholder="Item Code" required> -->
       <select class="form-control" name="itemID" #itemID="ngModel" [(ngModel)]="priceList.itemID" required>
-        <!-- <option value=""></option> -->
+        <option value=""></option>
         <option *ngFor="let itm of item" value="{{itm.itemID}}">{{itm.itemName}}</option>
       </select>
       <!-- <div class="validation-error" *ngIf="ItemCode.invalid && ItemCode.touched">This field is required</div> -->
@@ -21,14 +21,14 @@
       <label for="schoolSessionID">Session</label>
       <!-- <input class="form-control" name="SchoolSession" #SchoolSession="ngModel" [(ngModel)]="invoice.SchoolSession"> -->
       <select class="form-control" name="schoolSessionID" #schoolSessionID="ngModel" [(ngModel)]="priceList.schoolSessionID" required>
-        <!-- <option value=""></option>  -->
+        <option value=""></option> 
         <option *ngFor="let ss of schoolSession" value="{{ss.schoolSessionID}}">{{ss.schoolSessionName}}</option>
       </select>
     </div>
   <div class="form-group col-md-3">
     <label for="schoolTermID">Term</label>
     <select class="form-control" name="schoolTermID" #schoolTermID="ngModel" [(ngModel)]="priceList.schoolTermID" required>
-      <!-- <option value=""></option>   -->
+      <option value=""></option>  
       <option *ngFor="let st of schoolTerm" value="{{st.schoolTermID}}">{{st.schoolTermName}}</option>
     </select>
   </div>
@@ -36,7 +36,7 @@
     <label for="studentClassID">Class</label>
     <!-- <input type="text" class="form-control" name="StudentClass" #StudentClass="ngModel" [(ngModel)]="invoice.StudentClass" placeholder="Class"> -->
     <select class="form-control" name="studentClassID" #studentClassID="ngModel" [(ngModel)]="priceList.studentClassID" required>
-      <!-- <option value=""></option>   -->
+      <option value=""></option>  
       <option *ngFor="let sc of studentClass" value="{{sc.studentClassID}}">{{sc.studentClassName}}</option>
     </select>
   </div>

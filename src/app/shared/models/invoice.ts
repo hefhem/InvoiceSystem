@@ -48,11 +48,11 @@ export class InvoiceFull {
 export class PriceList {
     priceListID = 0;
     priceDescription = '';
-    schoolSessionID = 0;
-    studentClassID = 0;
-    schoolTermID = 0;
-    itemID = 0;
-    unitPrice = 0;
+    schoolSessionID: number;
+    studentClassID: number;
+    schoolTermID: number;
+    itemID: number;
+    unitPrice: number;
     createdByID: number;
   }
 

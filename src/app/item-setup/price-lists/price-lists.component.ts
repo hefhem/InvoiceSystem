@@ -15,7 +15,7 @@ import 'rxjs/add/operator/map';
   styleUrls: ['./price-lists.component.css']
 })
 export class PriceListsComponent implements OnInit {
-  dtOptions: DataTables.Settings = {};
+  // dtOptions: DataTables.Settings = {};
   endpoint = 'api/PriceList';
   priceList: PriceList = new PriceList();
 
@@ -45,17 +45,23 @@ export class PriceListsComponent implements OnInit {
       // this.router.navigate(['']);
         return;
     }
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10
-    };
+    // this.dtOptions = {
+    //   pagingType: 'full_numbers',
+    //   pageLength: 10
+    // };
     this.userID = this.authService.getUserID();
     this.getPriceLists();
   }
 
   onAdd() {
+    if (this.priceList.unitPrice < 1) {
+      this.toastr.error('Unit price must be greater than 0');
+      return;
+    }
     this.priceList.createdByID = this.userID;
-    if (this.priceList.priceListID === 0) {
+    // tslint:disable-next-line:triple-equals
+    if (!(this.priceList.priceListID > 0)) {
+      this.priceList.priceListID = 0;
       this.handleAPI.create(this.priceList, this.endpoint)
         .subscribe( data => {
             this.toastr.success('Price List added!', 'Success');
@@ -63,25 +69,25 @@ export class PriceListsComponent implements OnInit {
             this.getPriceLists();
           },
           error => {
-            if (error.object) {
-              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-            } else {
+            if (typeof error === 'string') {
               this.toastr.warning(error, 'Oops! An error occurred');
+            } else {
+              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
             }
           }
         );
     } else {
       this.handleAPI.update(this.priceList, this.endpoint)
         .subscribe( data => {
-            this.toastr.success('PriceList Updated!', 'Success');
+            this.toastr.success('Price List Updated!', 'Success');
             this.priceList = new PriceList();
             this.getPriceLists();
           },
           error => {
-            if (error.object) {
-              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-            } else {
+            if (typeof error === 'string') {
               this.toastr.warning(error, 'Oops! An error occurred');
+            } else {
+              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
             }
           }
         );
@@ -90,13 +96,20 @@ export class PriceListsComponent implements OnInit {
   showForEdit(priceList: any) {
     this.handleAPI.getByID(priceList.priceListID, this.endpoint)
       .subscribe( (data: any) => {
-          this.priceList = data;
+          this.priceList.priceListID = data.priceListID;
+          this.priceList.priceDescription = data.priceDescription;
+          this.priceList.schoolSessionID = data.schoolSessionID;
+          this.priceList.studentClassID = data.studentClassID;
+          this.priceList.schoolTermID = data.schoolTermID;
+          this.priceList.itemID = data.itemID;
+          this.priceList.unitPrice = data.unitPrice;
+          this.priceList.createdByID = data.createdByID;
         },
         error => {
-          if (error.object) {
-            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-          } else {
+          if (typeof error === 'string') {
             this.toastr.warning(error, 'Oops! An error occurred');
+          } else {
+            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
           }
         }
     );
@@ -111,10 +124,10 @@ export class PriceListsComponent implements OnInit {
             // console.log(data);
           },
           error => {
-            if (error.object) {
-              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-            } else {
+            if (typeof error === 'string') {
               this.toastr.warning(error, 'Oops! An error occurred');
+            } else {
+              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
             }
           }
       );
@@ -133,13 +146,14 @@ export class PriceListsComponent implements OnInit {
       .subscribe( (data: any) => {
         // console.log(data);
           this.priceListView = data;
+          // this.dtOptions.destroy = true;
           this.dtTrigger.next();
         },
         error => {
-          if (error.object) {
-            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-          } else {
+          if (typeof error === 'string') {
             this.toastr.warning(error, 'Oops! An error occurred');
+          } else {
+            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
           }
         }
     );
@@ -151,10 +165,10 @@ export class PriceListsComponent implements OnInit {
           this.item = data;
         },
         error => {
-          if (error.object) {
-            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-          } else {
+          if (typeof error === 'string') {
             this.toastr.warning(error, 'Oops! An error occurred');
+          } else {
+            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
           }
         }
     );
@@ -166,10 +180,10 @@ export class PriceListsComponent implements OnInit {
           this.schoolSession = data;
         },
         error => {
-          if (error.object) {
-            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-          } else {
+          if (typeof error === 'string') {
             this.toastr.warning(error, 'Oops! An error occurred');
+          } else {
+            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
           }
         }
     );
@@ -181,10 +195,10 @@ export class PriceListsComponent implements OnInit {
           this.schoolTerm = data;
         },
         error => {
-          if (error.object) {
-            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-          } else {
+          if (typeof error === 'string') {
             this.toastr.warning(error, 'Oops! An error occurred');
+          } else {
+            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
           }
         }
     );
@@ -196,10 +210,10 @@ export class PriceListsComponent implements OnInit {
           this.studentClass = data;
         },
         error => {
-          if (error.object) {
-            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-          } else {
+          if (typeof error === 'string') {
             this.toastr.warning(error, 'Oops! An error occurred');
+          } else {
+            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
           }
         }
     );
