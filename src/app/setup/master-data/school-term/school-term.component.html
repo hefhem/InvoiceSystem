@@ -1,4 +1,4 @@
-<form class="term-form" #termForm="ngForm" (ngSubmit)="onSubmit(termForm)">
+<form class="term-form" #termForm="ngForm" (ngSubmit)="onAdd()">
     <div class="form-row">
       
       <div class="form-group col-md-3">
@@ -8,11 +8,11 @@
       </div>
       <div class="form-group col-md-1">
           <label for="">&nbsp;</label>
-          <button [disabled]="!termForm.valid" type="button" class="btn btn-block btn-info" (click)="onAdd()" title="Add to list"><i class="fa fa-plus"></i></button>
+          <button [disabled]="!termForm.valid" type="button" class="btn btn-block btn-info" (click)="onAdd()" title="Add to list"><i class="fas fa-plus"></i></button>
       </div>
       <div class="form-group col-md-1">
           <label for="">&nbsp;</label>
-          <button type="button" class="btn btn-block btn-secondary" (click)="resetForm()" title="Clear form"><i class="fa fa-repeat"></i></button>
+          <button type="button" class="btn btn-block btn-secondary" (click)="getSchoolTerms()" title="Clear form"><i class="fas fa-undo"></i></button>
       </div>
     </div>
   </form>
@@ -30,10 +30,10 @@
               </td>
               <td align="right">
                 <a class="btn btn-primary" (click)="showForEdit(tm)" >
-                  <i class="fa fa-pencil text-white"></i>
+                  <i class="fas fa-edit text-white"></i>
                 </a>
                 <a class="btn btn-danger">
-                    <i class="fa fa-trash-o text-white" (click)="removeSchoolTerm(tm)"></i>
+                    <i class="fas fa-trash text-white" (click)="removeSchoolTerm(tm)"></i>
                   </a>
               </td>
             </tr>

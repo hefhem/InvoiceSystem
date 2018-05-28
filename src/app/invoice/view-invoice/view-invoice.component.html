@@ -37,10 +37,10 @@
               </td>
             <td>
               <a *ngIf="idt.status=='Open'" class="btn btn-primary text-white" [routerLink]="['/print-invoice', idt.invoiceMasterID]" >
-                <i class="fa fa-print"></i>
+                <i class="fas fa-print"></i>
               </a>
               <a *ngIf="idt.status=='Open'" class="btn btn-danger text-white" (click)="reverseInvoice(idt)">
-                  <i class="fa fa-ban"></i>
+                  <i class="fas fa-ban"></i>
                 </a>
             </td>
         

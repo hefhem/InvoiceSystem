@@ -16,6 +16,7 @@ import 'rxjs/add/operator/map';
 })
 export class PriceListsComponent implements OnInit {
   // dtOptions: DataTables.Settings = {};
+  dtOptions: any;
   endpoint = 'api/PriceList';
   priceList: PriceList = new PriceList();
 

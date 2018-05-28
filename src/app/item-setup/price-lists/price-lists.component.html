@@ -1,4 +1,4 @@
-<form class="price-form" #priceForm="ngForm" (ngSubmit)="onSubmit(priceForm)">
+<form class="price-form" #priceForm="ngForm" (ngSubmit)="onAdd()">
   <div class="form-row">
     <div class="form-group col-md-5">
         <label for="priceDescription">Price Description</label>
@@ -51,10 +51,10 @@
     <div class="form-group col-md-4">
     </div>
     <div class="form-group col-md-2">
-      <button [disabled]="!priceForm.valid" type="button" class="btn btn-block btn-info" (click)="onAdd()" title="Add to list"><i class="fa fa-plus"></i> Add</button>
+      <button [disabled]="!priceForm.valid" type="button" class="btn btn-block btn-info" (click)="onAdd()" title="Add to list"><i class="fas fa-plus"></i> Add</button>
     </div>
     <div class="form-group col-md-2">
-      <button type="button" class="btn btn-block btn-secondary" (click)="getPriceLists(priceForm)" title="Clear form"><i class="fa fa-repeat"></i> Reset</button>
+      <button type="button" class="btn btn-block btn-secondary" (click)="getPriceLists(priceForm)" title="Clear form"><i class="fas fa-undo"></i> Reset</button>
     </div>
     <div class="form-group col-md-4">
     </div>
@@ -97,10 +97,10 @@
             </td>
             <td align="right">
               <a class="btn btn-primary" (click)="showForEdit(price)" >
-                <i class="fa fa-pencil text-white"></i>
+                <i class="fas fa-edit text-white"></i>
               </a>
               <a class="btn btn-danger">
-                  <i class="fa fa-trash-o text-white" (click)="removePriceList(price)"></i>
+                  <i class="fas fa-trash text-white" (click)="removePriceList(price)"></i>
                 </a>
             </td>
           </tr>

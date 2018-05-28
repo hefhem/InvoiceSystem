@@ -34,7 +34,7 @@ export class ChangePasswordComponent implements OnInit {
     this.userName = this.auth.getUserName();
   }
 
-  changePassword() {
+  changeUserPassword() {
     if (this.account.newPassword !== this.confirmPassword) {
       this.toastr.warning('New password and confirm password not the same', 'Oops! An error occurred');
     } else {

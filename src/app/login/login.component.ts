@@ -11,6 +11,8 @@ import { User } from '../shared/models/user';
 })
 export class LoginComponent implements OnInit {
   user: User = new User();
+  disabled = false;
+  signin = 'Sign In';
   currentDate = new Date().getFullYear();
   account = {
     userName: '',
@@ -19,7 +21,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private auth: AuthService,
-    private toast: ToastrService  ) { }
+    private toastr: ToastrService  ) { }
 
   ngOnInit() {
     const tv = this.auth.isTokenValid();
@@ -30,6 +32,8 @@ export class LoginComponent implements OnInit {
   }
 
   doLogin() {
+    this.signin = 'Loading';
+    this.disabled = true;
     this.auth.login(this.account).subscribe(
       (data: any ) => {
         // console.log(data);
@@ -37,18 +41,24 @@ export class LoginComponent implements OnInit {
           this.auth.saveInLocal('token', data.message);
           this.auth.saveInLocal('id', data.id);
           this.auth.saveInLocal('isAdmin', data.isAdmin);
-          this.toast.success('Authenticated!');
+          this.toastr.success('Authenticated!');
           // window.location.href = '';
           this.router.navigate(['']);
         } else {
           if (data.message === 'reset') {
-            this.toast.success('Reset your password!');
+            this.toastr.success('Reset your password!');
             this.router.navigate(['/reset-password', data.id]);
           }
         }
       },
       error => {
-        this.toast.error(error);
+        if (typeof error === 'string') {
+          this.toastr.error(error, 'Oops! An error occurred');
+        } else {
+          this.toastr.error('Please check the console.', 'Oops! An error occurred');
+        }
+        this.signin = 'Sign In';
+        this.disabled = false;
       }
     );
 

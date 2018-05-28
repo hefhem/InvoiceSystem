@@ -48,10 +48,10 @@ export class SchoolTermComponent implements OnInit {
             this.getSchoolTerms();
           },
           error => {
-            if (error.object) {
-              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-            } else {
+            if (typeof error === 'string') {
               this.toastr.warning(error, 'Oops! An error occurred');
+            } else {
+              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
             }
           }
         );
@@ -63,10 +63,10 @@ export class SchoolTermComponent implements OnInit {
             this.getSchoolTerms();
           },
           error => {
-            if (error.object) {
-              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-            } else {
+            if (typeof error === 'string') {
               this.toastr.warning(error, 'Oops! An error occurred');
+            } else {
+              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
             }
           }
         );
@@ -78,10 +78,10 @@ export class SchoolTermComponent implements OnInit {
           this.schoolTerm = data;
         },
         error => {
-          if (error.object) {
-            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-          } else {
+          if (typeof error === 'string') {
             this.toastr.warning(error, 'Oops! An error occurred');
+          } else {
+            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
           }
         }
     );
@@ -96,10 +96,10 @@ export class SchoolTermComponent implements OnInit {
             console.log(data);
           },
           error => {
-            if (error.object) {
-              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-            } else {
+            if (typeof error === 'string') {
               this.toastr.warning(error, 'Oops! An error occurred');
+            } else {
+              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
             }
           }
       );
@@ -113,10 +113,10 @@ export class SchoolTermComponent implements OnInit {
           this.schoolTerms = data;
         },
         error => {
-          if (error.object) {
-            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-          } else {
+          if (typeof error === 'string') {
             this.toastr.warning(error, 'Oops! An error occurred');
+          } else {
+            this.toastr.warning('Please check the console.', 'Oops! An error occurred');
           }
         }
     );
