@@ -1,0 +1,175 @@
+<app-navbar></app-navbar>
+<div class="container">
+<div class="div-per">
+    <h2 class="bg-secondary text-white h-per">
+    PRODUCTION RECEIPT
+  </h2>
+</div>
+<div class="alert alert-success alert-dismissible text-center" *ngIf="print">
+  Production Receipt {{ invID }} Created! <a class="btn btn-primary text-white" [routerLink]="['/print-invoice', invID]">Print</a>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <form class="inv-form" #receiptForm="ngForm" (ngSubmit)="onSubmit(receiptForm)">
+      <div class="form-row">
+          <input type="hidden" name="ProdMasterID" #ProdMasterID="ngModel" [(ngModel)]="prodMaster.ProdMasterID">
+          <div class="form-group col-md-6">
+            <label for="OrderNumber">Order Number</label>
+            <input class="form-control" name="OrderNumber" #OrderNumber="ngModel" [(ngModel)]="prodMaster.OrderNumber" placeholder="e.g 20180101" required>
+              <!-- <div class="validation-error" *ngIf="CustomerName.invalid && CustomerName.touched">This field is required</div> -->
+          </div>
+          <div class="form-group col-md-2">
+            <label for="ProdDate">Date</label>
+            <input type="date" class="form-control" name="ProdDate" #ProdDate="ngModel" [(ngModel)]="prodMaster.ProdDate" placeholder="e.g 01/01/2018" required>
+          </div>
+          <div class="form-group form-group col-md-2">
+            <label for="MachineNo">Machine No.</label>
+            <input disabled class="form-control" name="MachineNo" #MachineNo="ngModel" [(ngModel)]="prodMaster.MachineNo">
+          </div>
+          <div class="form-group col-md-2">
+              <label for="IsPosted">Posted</label>
+              <input disabled class="form-control" name="IsPosted" #IsPosted="ngModel" [(ngModel)]="prodMaster.IsPosted">
+          </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-2">
+            <label for="ItemCode">Item Code.</label>
+            <input class="form-control" name="ItemCode" #ItemCode="ngModel" [(ngModel)]="prodMaster.ItemCode">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="ItemName">Item Name</label>
+            <input type="text" class="form-control" name="ItemName" #ItemName="ngModel" [(ngModel)]="prodMaster.ItemName">
+        </div>
+        <div class="form-group col-md-2"></div>
+        <div class="form-group col-md-2">
+            <label for="PlannedQty">Planned Qty</label>
+            <input type="text" class="form-control" name="PlannedQty" #PlannedQty="ngModel" [(ngModel)]="prodMaster.PlannedQty">
+            <!-- <div class="validation-error" *ngIf="InvoiceDate.invalid && InvoiceDate.touched">This field is required</div> -->
+        </div>
+        <div class="form-group col-md-2">
+            <label for="OpenQty">Open Qty</label>
+            <input type="text" class="form-control" name="OpenQty" #OpenQty="ngModel" [(ngModel)]="prodMaster.OpenQty">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="itemID">Item Description</label>
+          <!-- <input class="form-control" name="ItemCode" #ItemCode="ngModel" [(ngModel)]="invoiceDetail.ItemCode" placeholder="Item Code" required> -->
+          <select class="form-control" name="itemID" #itemID="ngModel" [(ngModel)]="invoiceDetail.itemID" (change)="onChangeItem()" [disabled]="!enableItem" required>
+            <option *ngFor="let item of items" value="{{item.itemID}}">{{item.itemName}}</option>
+          </select>
+          <!-- <div class="validation-error" *ngIf="ItemCode.invalid && ItemCode.touched">This field is required</div> -->
+        </div>
+        <div class="form-group col-md-1">
+            <label for="qty">Qty</label>
+          <input type="number" [min]="1" class="form-control" name="qty" #qty="ngModel" [(ngModel)]="invoiceDetail.qty" placeholder="Qty" required>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="unitPrice">Unit Price</label>
+          <input type="number" [min]="0" class="form-control" name="unitPrice" #unitPrice="ngModel" [(ngModel)]="invoiceDetail.unitPrice" placeholder="Unit Price" disabled required>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="lineTotal">Line Total</label>
+          <input disabled class="form-control" name="lineTotal" #lineTotal="ngModel" [(ngModel)]="invoiceDetail.lineTotal" placeholder="LineTotal" value="{{ invoiceDetail.qty * invoiceDetail.unitPrice | currency : 'NGN'}}">
+        </div>
+        <div class="form-group col-md-1">
+            <label for="">&nbsp;</label>
+            <button [disabled]="!invoiceForm.valid" type="button" class="btn btn-block btn-info" (click)="onAdd()" title="Add to list"><i class="fa fa-plus"></i></button>
+        </div>
+        <div class="form-group col-md-1">
+            <label for="">&nbsp;</label>
+            <button type="button" class="btn btn-block btn-secondary" (click)="clear()" title="Clear form"><i class="fa fa-undo"></i></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-sm table-hover">
+      <thead>
+        <td>Item Description</td>
+        <td>Qty</td>
+        <td>Price</td>
+        <td>Total</td>
+        <td>Action</td>
+      </thead>
+      <tbody>
+        <tr *ngFor="let idt of InvoiceArray">
+          <td>
+            {{idt.itemName}}
+          </td>
+          <td>
+            {{idt.qty}}
+          </td>
+          <td>
+            {{idt.unitPrice | currency : "NGN"}}
+          </td>
+          <td>
+            {{idt.lineTotal | currency : "NGN"}}
+          </td>
+          <td>
+            <!-- <a class="btn btn-primary" (click)="showForEdit(idt)" >
+              <i class="fa fa-pencil-square-o"></i>
+            </a> -->
+            <a class="btn btn-danger text-white" (click)="onRemove(idt)">
+                <i class="fas fa-trash"></i>
+              </a>
+          </td>
+      
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br/>
+<div class="row">
+  <div class="form-group col-md-8">
+    
+  </div>
+  <div class="form-group col-md-4" style="border: 1px solid; border-radius: 4px;">
+      <div class="row">
+    <div class="col-md-6">Discount: </div>
+    <div class="col-md-6">{{ invoiceDiscount | currency : "NGN"}}</div>
+    </div>
+  </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-8">
+      
+    </div>
+    <div class="form-group col-md-4" style="border: 1px solid; border-radius: 4px;">
+        <div class="row">
+        <div class="col-md-6">Total Before Discount: </div>
+        <div class="col-md-6">{{ invoiceTotalBeforeDiscount | currency : "NGN"}}</div>
+        </div>
+    </div>
+</div>
+<div class="row">
+  <div class="form-group col-md-8">
+    
+    </div>
+    <div class="form-group col-md-4" style="border: 1px solid; border-radius: 4px;">
+        <div class="row">
+        <div class="col-md-6">Total After Discount: </div>
+        <div class="col-md-6">{{ invoiceTotal | currency : "NGN"}}</div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-3">
+        <button [disabled]="!formReady" type="submit" class="btn btn-lg btn-block btn-success" (click)="onSubmit()" title="Add to list"><i class="fa fa-floppy-o"> Save</i></button>
+    </div>
+    <div class="form-group col-md-3">
+        <button type="button" class="btn btn-lg btn-block btn-secondary" (click)="resetForm(invoiceForm)" title="Clear form"><i class="fa fa-repeat"> Reset</i></button>
+    </div>
+      <div class="form-group col-md-6">
+        
+      
+      </div>
+  </div>
+  </div>

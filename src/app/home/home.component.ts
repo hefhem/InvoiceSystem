@@ -15,10 +15,10 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const tv = this.authService.isTokenValid();
-    if (!tv) {
-        this.route.navigate(['/login']);
-    }
+    // const tv = this.authService.isTokenValid();
+    // if (!tv) {
+    //     this.route.navigate(['/login']);
+    // }
   }
 
 }

@@ -21,17 +21,17 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    const tv = this.auth.isTokenValid();
-    if (!tv) {
-        this.router.navigate(['/login']);
-        return;
-    }
-    // console.log(this.auth.isAdmin());
-    if (this.auth.isAdmin()) {
-      this.cls = '';
-    }
-    this.userName = this.auth.getUserName();
-    // this.getUserRole();
+    // const tv = this.auth.isTokenValid();
+    // if (!tv) {
+    //     this.router.navigate(['/login']);
+    //     return;
+    // }
+    // // console.log(this.auth.isAdmin());
+    // if (this.auth.isAdmin()) {
+    //   this.cls = '';
+    // }
+    // this.userName = this.auth.getUserName();
+    // // this.getUserRole();
   }
 
   logout() {

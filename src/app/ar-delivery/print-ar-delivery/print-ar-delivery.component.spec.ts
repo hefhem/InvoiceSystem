@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ItemSetupComponent } from './item-setup.component';
+import { PrintArDeliveryComponent } from './print-ar-delivery.component';
 
-describe('ItemSetupComponent', () => {
-  let component: ItemSetupComponent;
-  let fixture: ComponentFixture<ItemSetupComponent>;
+describe('PrintArDeliveryComponent', () => {
+  let component: PrintArDeliveryComponent;
+  let fixture: ComponentFixture<PrintArDeliveryComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ItemSetupComponent ]
+      declarations: [ PrintArDeliveryComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ItemSetupComponent);
+    fixture = TestBed.createComponent(PrintArDeliveryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -17,14 +17,7 @@ import { ViewInvoiceComponent } from './invoice/view-invoice/view-invoice.compon
 import { CompanyComponent } from './setup/company/company.component';
 import { ViewUsersComponent } from './User/view-users/view-users.component';
 import { UserPermissionComponent } from './User/user-permission/user-permission.component';
-import { ViewItemsComponent } from './item-setup/view-items/view-items.component';
-import { PriceListsComponent } from './item-setup/price-lists/price-lists.component';
-import { MasterDataComponent } from './setup/master-data/master-data.component';
-import { SchoolTermComponent } from './setup/master-data/school-term/school-term.component';
-import { SchoolSessionComponent } from './setup/master-data/school-session/school-session.component';
-import { StudentClassComponent } from './setup/master-data/student-class/student-class.component';
 import { LoginComponent } from './login/login.component';
-import { ItemSetupComponent } from './item-setup/item-setup.component';
 import { UserComponent } from './User/user/user.component';
 import { ApiService } from './shared/services/api.service';
 import { AuthService } from './shared/services/auth.service';
@@ -36,6 +29,13 @@ import { HandleAPIService } from './shared/services/handle-api.service';
 import { PrintInvoiceComponent } from './invoice/print-invoice/print-invoice.component';
 import { ResetPasswordComponent } from './User/reset-password/reset-password.component';
 import { ChangePasswordComponent } from './User/change-password/change-password.component';
+import { ReceiptProdComponent } from './receipt-prod/receipt-prod.component';
+import { ViewReceiptProdComponent } from './receipt-prod/view-receipt-prod/view-receipt-prod.component';
+import { PrintBarcodeComponent } from './receipt-prod/print-barcode/print-barcode.component';
+import { PrintPackingSlipComponent } from './receipt-prod/print-packing-slip/print-packing-slip.component';
+import { ArDeliveryComponent } from './ar-delivery/ar-delivery.component';
+import { PrintArDeliveryComponent } from './ar-delivery/print-ar-delivery/print-ar-delivery.component';
+import { ViewArDeliveryComponent } from './ar-delivery/view-ar-delivery/view-ar-delivery.component';
 
 
 @NgModule({
@@ -48,18 +48,18 @@ import { ChangePasswordComponent } from './User/change-password/change-password.
     CompanyComponent,
     ViewUsersComponent,
     UserPermissionComponent,
-    ViewItemsComponent,
-    PriceListsComponent,
-    MasterDataComponent,
-    SchoolTermComponent,
-    SchoolSessionComponent,
-    StudentClassComponent,
     LoginComponent,
-    ItemSetupComponent,
     UserComponent,
     PrintInvoiceComponent,
     ResetPasswordComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    ReceiptProdComponent,
+    ViewReceiptProdComponent,
+    PrintBarcodeComponent,
+    PrintPackingSlipComponent,
+    ArDeliveryComponent,
+    PrintArDeliveryComponent,
+    ViewArDeliveryComponent
   ],
   imports: [
     BrowserModule,
