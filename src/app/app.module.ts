@@ -8,6 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { DataTablesModule } from 'angular-datatables';
+import { NgxBarcodeModule } from 'ngx-barcode';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -63,6 +65,8 @@ import { ViewArDeliveryComponent } from './ar-delivery/view-ar-delivery/view-ar-
   ],
   imports: [
     BrowserModule,
+    NgxBarcodeModule,
+    NgbModule,
     AppRoutingModule,
     FormsModule,
     HttpModule,

@@ -6,6 +6,7 @@ export class ProdMaster {
     ItemName: string;
     PlannedQty: number;
     CompletedQty: number;
+    TotalQty: number;
     MachineNo: string;
     CardName: string;
     PackingNo: string;
@@ -14,6 +15,7 @@ export class ProdMaster {
     PostDate: Date;
     IsApproved: boolean;
     CreatedBy: number;
+    DateCreated: Date;
 }
 
 export class ProdDetail {
@@ -28,6 +30,7 @@ export class ProdDetail {
 export class SAPCompany {
     SAPCompanyID: number;
     SAPLicenseServerName: string;
+    SAPLicenseServerPort: string;
     SAPServerName: string;
     SAPUserName: string;
     SAPUserPassword: string;
@@ -36,6 +39,30 @@ export class SAPCompany {
     SQLUserPassword: string;
     SQLServerVersion: string;
 }
+
+export class PostProductionReceipt {
+    ProdMasterID: number;
+    sapUserName: string;
+    sapPassword: string;
+}
+
+export class ProductionOrderModel {
+    DocEntry: number;
+    DocNum: string;
+    PostDate: Date;
+    CardCode: string;
+    CardName: string;
+    ItemCode: string;
+    ItemName: string;
+    PlannedQty: number;
+    CompltQty: number;
+    MachineNo: string;
+  }
+/*
+public int ProdMasterID { get; set; }
+public string sapUserName { get; set; }
+public string sapPassword { get; set; }
+ */
 
 /*
 public class SAPCompany {

@@ -15,108 +15,128 @@
   <div class="col-md-12">
     <form class="inv-form" #receiptForm="ngForm" (ngSubmit)="onSubmit(receiptForm)">
       <div class="form-row">
-          <input type="hidden" name="ProdMasterID" #ProdMasterID="ngModel" [(ngModel)]="prodMaster.ProdMasterID">
-          <div class="form-group col-md-6">
-            <label for="OrderNumber">Order Number</label>
-            <input class="form-control" name="OrderNumber" #OrderNumber="ngModel" [(ngModel)]="prodMaster.OrderNumber" placeholder="e.g 20180101" required>
-              <!-- <div class="validation-error" *ngIf="CustomerName.invalid && CustomerName.touched">This field is required</div> -->
+          <input type="hidden" name="ProdMasterID" #ProdMasterID="ngModel" [(ngModel)]="prodMaster.ProdMasterID" value="0">
+          <div class="form-group col-md-3">
+            <label for="DocNum"><strong>Order Number</strong> </label>
+            <div class="input-group">
+              <input class="form-control" name="DocNum" #DocNum="ngModel" [(ngModel)]="prodMaster.DocNum" placeholder="e.g 20180101" autofocus required>
+              <div class="input-group-append">
+                <button [disabled]="DocNum.invalid" type="button" class="btn btn-block btn-info" (click)="getOrderDetails()" title="Get record"><i class="fa fa-sync {{spincls}}"></i></button>
+              </div>
+            </div>
+            <!-- <div class="validation-error" *ngIf="CustomerName.invalid && CustomerName.touched">This field is required</div> -->
           </div>
-          <div class="form-group col-md-2">
-            <label for="ProdDate">Date</label>
-            <input type="date" class="form-control" name="ProdDate" #ProdDate="ngModel" [(ngModel)]="prodMaster.ProdDate" placeholder="e.g 01/01/2018" required>
+          <div class="form-group col-md-3">
+            <label for="ProdDate"><strong>Date</strong> </label>
+            <div class="input-group">
+              <input readonly class="form-control" placeholder="yyyy-mm-dd"
+                      name="ProdDate" [(ngModel)]="prodDate" ngbDatepicker #d="ngbDatepicker" (change)="setDate()" required>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="far fa-calendar"></i></button>
+              </div>
+              <!-- {{prodMaster.ProdDate}} {{prodDate | json}} -->
+            </div>
           </div>
+          <div class="form-group col-md-2"></div>
           <div class="form-group form-group col-md-2">
-            <label for="MachineNo">Machine No.</label>
-            <input disabled class="form-control" name="MachineNo" #MachineNo="ngModel" [(ngModel)]="prodMaster.MachineNo">
+            <label for="MachineNo"><strong>Machine No.:</strong></label>
+            <!-- <input disabled class="form-control" name="MachineNo" #MachineNo="ngModel" [(ngModel)]="prodMaster.MachineNo"> -->
+            {{prodMaster.MachineNo}}
           </div>
           <div class="form-group col-md-2">
-              <label for="IsPosted">Posted</label>
-              <input disabled class="form-control" name="IsPosted" #IsPosted="ngModel" [(ngModel)]="prodMaster.IsPosted">
+              <label for="IsPosted"><strong>Posted:</strong></label>
+              <!-- <input disabled class="form-control" name="IsPosted" #IsPosted="ngModel" [(ngModel)]="prodMaster.IsPosted"> -->
+              {{prodMaster.IsPosted ? 'Yes' : 'No'}}
           </div>
       </div>
       <div class="form-row">
-        <div class="form-group col-md-2">
-            <label for="ItemCode">Item Code.</label>
-            <input class="form-control" name="ItemCode" #ItemCode="ngModel" [(ngModel)]="prodMaster.ItemCode">
+        <div class="form-group col-md-3">
+            <label for="ItemCode"><strong>Item Code:</strong></label>
+            <!-- <input class="form-control" name="ItemCode" #ItemCode="ngModel" [(ngModel)]="prodMaster.ItemCode"> -->
+            {{prodMaster.ItemCode}}
         </div>
         <div class="form-group col-md-4">
-            <label for="ItemName">Item Name</label>
-            <input type="text" class="form-control" name="ItemName" #ItemName="ngModel" [(ngModel)]="prodMaster.ItemName">
+            <label for="ItemName"><strong>Item Name:</strong></label>
+            <!-- <input type="text" class="form-control" name="ItemName" #ItemName="ngModel" [(ngModel)]="prodMaster.ItemName"> -->
+            {{prodMaster.ItemName}}
+        </div>
+        <div class="form-group col-md-1"></div>
+        <div class="form-group col-md-2">
+            <label for="PlannedQty"><strong>Planned Qty:</strong></label>
+            <!-- <input type="text" class="form-control" name="PlannedQty" #PlannedQty="ngModel" [(ngModel)]="prodMaster.PlannedQty"> -->
+            <!-- <div class="validation-error" *ngIf="InvoiceDate.invalid && InvoiceDate.touched">This field is required</div> -->
+            {{prodMaster.PlannedQty}}
+        </div>
+        <div class="form-group col-md-2">
+            <label for="OpenQty"><strong>Open Qty:</strong></label>
+            <!-- <input type="text" class="form-control" name="OpenQty" #OpenQty="ngModel" [(ngModel)]="prodMaster.OpenQty"> -->
+            {{OpenQty}}
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="CardName"><strong>Customer Name:</strong></label>
+          <!-- <input class="form-control" name="CardName" #CardName="ngModel" [(ngModel)]="prodMaster.CardName"> -->
+          <!-- <div class="validation-error" *ngIf="ItemCode.invalid && ItemCode.touched">This field is required</div> -->
+          {{prodMaster.CardName}}
         </div>
         <div class="form-group col-md-2"></div>
         <div class="form-group col-md-2">
-            <label for="PlannedQty">Planned Qty</label>
-            <input type="text" class="form-control" name="PlannedQty" #PlannedQty="ngModel" [(ngModel)]="prodMaster.PlannedQty">
-            <!-- <div class="validation-error" *ngIf="InvoiceDate.invalid && InvoiceDate.touched">This field is required</div> -->
+            <label for="TotalQty"><strong>Total Qty:</strong></label>
+          <!-- <input type="text" class="form-control" name="TotalQty" #TotalQty="ngModel" [(ngModel)]="prodMaster.TotalQty"> -->
+          {{prodMaster.TotalQty | number: '1.2'}}Kgs
         </div>
         <div class="form-group col-md-2">
-            <label for="OpenQty">Open Qty</label>
-            <input type="text" class="form-control" name="OpenQty" #OpenQty="ngModel" [(ngModel)]="prodMaster.OpenQty">
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group col-md-4">
-            <label for="itemID">Item Description</label>
-          <!-- <input class="form-control" name="ItemCode" #ItemCode="ngModel" [(ngModel)]="invoiceDetail.ItemCode" placeholder="Item Code" required> -->
-          <select class="form-control" name="itemID" #itemID="ngModel" [(ngModel)]="invoiceDetail.itemID" (change)="onChangeItem()" [disabled]="!enableItem" required>
-            <option *ngFor="let item of items" value="{{item.itemID}}">{{item.itemName}}</option>
-          </select>
-          <!-- <div class="validation-error" *ngIf="ItemCode.invalid && ItemCode.touched">This field is required</div> -->
-        </div>
-        <div class="form-group col-md-1">
-            <label for="qty">Qty</label>
-          <input type="number" [min]="1" class="form-control" name="qty" #qty="ngModel" [(ngModel)]="invoiceDetail.qty" placeholder="Qty" required>
-        </div>
-        <div class="form-group col-md-2">
-            <label for="unitPrice">Unit Price</label>
-          <input type="number" [min]="0" class="form-control" name="unitPrice" #unitPrice="ngModel" [(ngModel)]="invoiceDetail.unitPrice" placeholder="Unit Price" disabled required>
-        </div>
-        <div class="form-group col-md-2">
-            <label for="lineTotal">Line Total</label>
-          <input disabled class="form-control" name="lineTotal" #lineTotal="ngModel" [(ngModel)]="invoiceDetail.lineTotal" placeholder="LineTotal" value="{{ invoiceDetail.qty * invoiceDetail.unitPrice | currency : 'NGN'}}">
-        </div>
-        <div class="form-group col-md-1">
-            <label for="">&nbsp;</label>
-            <button [disabled]="!invoiceForm.valid" type="button" class="btn btn-block btn-info" (click)="onAdd()" title="Add to list"><i class="fa fa-plus"></i></button>
-        </div>
-        <div class="form-group col-md-1">
-            <label for="">&nbsp;</label>
-            <button type="button" class="btn btn-block btn-secondary" (click)="clear()" title="Clear form"><i class="fa fa-undo"></i></button>
+            <label for="PackingNo"><strong>Packing No:</strong></label>
+          <!-- <input type="text" class="form-control" name="PackingNo" #PackingNo="ngModel" [(ngModel)]="prodMaster.PackingNo"> -->
+          {{prodMaster.PackingNo}}
         </div>
       </div>
     </form>
   </div>
 </div>
+<hr/>
+<form class="inv-form" #qtyForm="ngForm" (ngSubmit)="onAddBatch()">
+<div class="form-row">
+    <div class="col-md-4"></div>
+    <div class="form-group col-md-2">
+        <label for="AutoQty"><strong>Auto Quantity</strong></label>
+      <input type="number" min="0" class="form-control" name="AutoQty" [(ngModel)]="AutoQty" (keyup)="makeQtyValid()">
+    </div>
+    <div class="form-group col-md-1">
+        <label for="">&nbsp;</label>
+        <button type="submit" [disabled]="!qtyValid" class="btn btn-block btn-info" title="Add to list"><i class="fa fa-plus"></i></button>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+</form>
+<hr/>
 <div class="row">
   <div class="col-md-12">
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" width="100px">
       <thead>
-        <td>Item Description</td>
-        <td>Qty</td>
-        <td>Price</td>
-        <td>Total</td>
-        <td>Action</td>
+        <td> <strong>Batch No.</strong></td>
+        <td><strong>Quantity</strong></td>
+        <td><strong>Action</strong></td>
       </thead>
       <tbody>
-        <tr *ngFor="let idt of InvoiceArray">
+        <tr *ngFor="let idt of prodDetails">
           <td>
-            {{idt.itemName}}
+            {{idt.BatchNo}}
           </td>
           <td>
-            {{idt.qty}}
-          </td>
-          <td>
-            {{idt.unitPrice | currency : "NGN"}}
-          </td>
-          <td>
-            {{idt.lineTotal | currency : "NGN"}}
+            {{idt.Quantity | number: '1.2'}}
           </td>
           <td>
             <!-- <a class="btn btn-primary" (click)="showForEdit(idt)" >
               <i class="fa fa-pencil-square-o"></i>
             </a> -->
-            <a class="btn btn-danger text-white" (click)="onRemove(idt)">
+            <a class="btn btn-success text-white" (click)="open(content,idt)" title="Preview label">
+                <i class="fas fa-eye"></i>
+              </a>
+              &nbsp;
+              <a class="btn btn-danger text-white" (click)="onRemoveBatch(idt)" title="Remove from list">
                 <i class="fas fa-trash"></i>
               </a>
           </td>
@@ -127,49 +147,119 @@
   </div>
 </div>
 <br/>
-<div class="row">
-  <div class="form-group col-md-8">
-    
-  </div>
-  <div class="form-group col-md-4" style="border: 1px solid; border-radius: 4px;">
-      <div class="row">
-    <div class="col-md-6">Discount: </div>
-    <div class="col-md-6">{{ invoiceDiscount | currency : "NGN"}}</div>
-    </div>
-  </div>
-</div>
-<div class="row">
-    <div class="form-group col-md-8">
-      
-    </div>
-    <div class="form-group col-md-4" style="border: 1px solid; border-radius: 4px;">
-        <div class="row">
-        <div class="col-md-6">Total Before Discount: </div>
-        <div class="col-md-6">{{ invoiceTotalBeforeDiscount | currency : "NGN"}}</div>
-        </div>
-    </div>
-</div>
-<div class="row">
-  <div class="form-group col-md-8">
-    
-    </div>
-    <div class="form-group col-md-4" style="border: 1px solid; border-radius: 4px;">
-        <div class="row">
-        <div class="col-md-6">Total After Discount: </div>
-        <div class="col-md-6">{{ invoiceTotal | currency : "NGN"}}</div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="form-group col-md-3">
-        <button [disabled]="!formReady" type="submit" class="btn btn-lg btn-block btn-success" (click)="onSubmit()" title="Add to list"><i class="fa fa-floppy-o"> Save</i></button>
-    </div>
-    <div class="form-group col-md-3">
-        <button type="button" class="btn btn-lg btn-block btn-secondary" (click)="resetForm(invoiceForm)" title="Clear form"><i class="fa fa-repeat"> Reset</i></button>
-    </div>
-      <div class="form-group col-md-6">
-        
-      
+  <div class="row">
+      <div class="form-group col-md-3">
+          <button [disabled]="!formValid" type="submit" class="btn btn-lg btn-block btn-success" (click)="onSubmit()" title="Add to list"><i class="far fa-save"> Save</i></button>
       </div>
+      <div class="form-group col-md-3">
+          <button [hidden]="!isPostable" type="button" class="btn btn-lg btn-block btn-secondary" (click)="openSAPCred(saplogin)" title="Clear form"><i class="fas fa-rocket"> Post</i></button>
+      </div>
+        <div class="form-group col-md-6">
+          
+        
+        </div>
   </div>
+  
+  
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Barcode Printing</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
+  <div class="modal-body">
+    <div class="row" id="print-section">
+      <div class="col-md-12 text-center">
+        <table class="table text-center">
+          <tr>
+            <td colspan="2">
+                <h6>ARISTOCRAT INDUSTRIES LTD.</h6>
+                <P>
+                  PLOT NO. 7&B, BLOCK-X, OTA, INDUSTRIAL ESTATE, OGUN STATE, NIGERIA
+                </P>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+                {{prodMaster.ItemName}}
+            </td>
+          </tr>
+          <tr>
+            <td>Batch No.: {{bc_batchno}}</td>
+            <td>Weight: {{bc_weight}}Kgs</td>
+          </tr>
+          <tr>
+            <td>PACKED ON: {{currentDate | date: 'dd/MM/yyyy'}}</td>
+            <td>Machine No.:</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+                <ngx-barcode
+                [bc-element-type]="elementType"
+                [bc-value]="value"
+                [bc-format]="format"
+                [bc-line-color]="lineColor"
+                [bc-width]="width"
+                [bc-height]="height"
+                [bc-display-value]="displayValue"
+                [bc-font-options]="fontOptions"
+                [bc-font]="font"
+                [bc-text-align]="textAlign"
+                [bc-text-position]="textPosition"
+                [bc-text-margin]="textMargin"
+                [bc-font-size]="fontSize"
+                [bc-background]="background"
+                [bc-margin]="margin"
+                [bc-margin-top]="marginTop"
+                [bc-margin-bottom]="marginBottom"
+                [bc-margin-left]="marginLeft"
+                [bc-margin-right]="marginRight"
+              ></ngx-barcode>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+                SUPERVISOR:...............
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+                Note:
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button class="btn btn-primary" (click)="printRecord()">print</button>
+  </div>
+</ng-template>
+<ng-template #saplogin let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Provide SAP Credentials</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form class="inv-form" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+    <div class="modal-body">
+      <div class="form-group">
+          <!-- <label for="AutoQty">Auto Quantity</label> -->
+        <input type="text" class="form-control" name="sapUserName" [(ngModel)]="postProd.sapUserName" placeholder="Username" required>
+        
+      </div>
+      <div class="form-group">
+          <!-- <label for="AutoQty">Auto Quantity</label> -->
+        <input type="password" class="form-control" name="sapPassword" [(ngModel)]="postProd.sapPassword" placeholder="Password" required>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+        <button [disabled]="!loginForm.IsValid" class="btn btn-primary" (click)="postToSAP()">Login</button>
+    </div>
+  </form>
+  </ng-template>

@@ -11,6 +11,7 @@ import { HandleAPIService } from './handle-api.service';
 @Injectable()
 export class AuthService {
     tokenData: any;
+    loading = false;
     constructor(
       @Inject(SESSION_STORAGE) private storage: WebStorageService,
       private api: ApiService) { }

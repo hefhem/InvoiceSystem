@@ -1,7 +1,7 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
 
-  <a class="navbar-brand" routerLink="">Aristrocrat</a>
+  <a class="navbar-brand" routerLink="">Aristocrat</a>
   <div class="container" style="margin-left:2%;">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -34,6 +34,9 @@
         </div>
       </li>
     </ul>
+  </div>
+  <div class="collapse navbar navbar-collapse">
+    <i [hidden]="!this.auth.loading" class="fas fa-cog fa-3x fa-spin text-white"></i>  
   </div>
   <div class="collapse navbar navbar-collapse justify-content-end ">
     <ul class="navbar-nav justify-content-end">
