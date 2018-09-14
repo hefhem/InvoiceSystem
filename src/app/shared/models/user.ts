@@ -1,10 +1,17 @@
-export class User {
-    userID = 0;
-    userName: string;
-    firstName: string;
-    lastName: string;
-    resetPassword: string;
-    isAdmin: string;
-    isActive: string;
-    createdByID: number;
+export class UserRole {
+    UserRoleID: number;
+    UserName: string;
+    IsAdmin: string;
+    ApprovePR: string;
+    ApproveDV: string;
+    ApproveGR: string;
+}
+export class ClsTokenResponse {
+    IsSuccess: boolean;
+    Id: number;
+    Message: string;
+    UserName: string;
+    Token: string;
+    ResetPassword: boolean;
+    IsAdmin: boolean;
 }

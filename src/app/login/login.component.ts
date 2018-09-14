@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { User } from '../shared/models/user';
+import { ClsTokenResponse } from '../shared/models/user';
 
 @Component({
   selector: 'app-login',
@@ -10,13 +10,13 @@ import { User } from '../shared/models/user';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  user: User = new User();
+  clsTokenResponse: ClsTokenResponse = new ClsTokenResponse();
   disabled = false;
   signin = 'Sign In';
   currentDate = new Date().getFullYear();
   account = {
-    userName: '',
-    password: ''
+    UserCode: '',
+    UserPassword: ''
   };
   constructor(
     private router: Router,
@@ -37,18 +37,17 @@ export class LoginComponent implements OnInit {
     this.auth.login(this.account).subscribe(
       (data: any ) => {
         // console.log(data);
-        if (data.isSuccess) {
-          this.auth.saveInLocal('token', data.message);
-          this.auth.saveInLocal('id', data.id);
-          this.auth.saveInLocal('isAdmin', data.isAdmin);
+        if (data.IsSuccess) {
+          this.auth.saveInLocal('token', data.Token);
+          this.auth.saveInLocal('username', data.UserName);
+          this.auth.saveInLocal('isAdmin', data.IsAdmin);
+          // const userRole = this.auth.getUserRole(data.UserName);
+          // this.auth.saveInLocal('userRole');
           this.toastr.success('Authenticated!');
           // window.location.href = '';
           this.router.navigate(['']);
         } else {
-          if (data.message === 'reset') {
-            this.toastr.success('Reset your password!');
-            this.router.navigate(['/reset-password', data.id]);
-          }
+            this.toastr.warning(data.Message);
         }
       },
       error => {

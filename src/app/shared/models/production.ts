@@ -1,20 +1,22 @@
 export class ProdMaster {
-    ProdMasterID: number;
-    DocEntry: string;
-    DocNum: string;
+    ProdMasterID = 0;
+    DocEntry = '';
+    DocNum = '';
     ItemCode: string;
     ItemName: string;
-    PlannedQty: number;
+    PlannedQty = 0;
     CompletedQty: number;
-    TotalQty: number;
+    TotalQty = 0;
     MachineNo: string;
     CardName: string;
     PackingNo: string;
     ProdDate: Date;
+    Supervisor: string;
     IsPosted: boolean;
     PostDate: Date;
     IsApproved: boolean;
-    CreatedBy: number;
+    ApprovedBy: string;
+    CreatedBy: string;
     DateCreated: Date;
 }
 

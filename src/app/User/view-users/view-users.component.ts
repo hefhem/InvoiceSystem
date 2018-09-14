@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { User } from '../../shared/models/user';
+import { UserRole } from '../../shared/models/user';
 import { HandleAPIService } from '../../shared/services/handle-api.service';
 import { AuthService } from '../../shared/services/auth.service';
 
@@ -12,9 +12,9 @@ import { AuthService } from '../../shared/services/auth.service';
   styleUrls: ['./view-users.component.css']
 })
 export class ViewUsersComponent implements OnInit {
-  user: User = new User();
-  users: User[] = [];
-  endpoint = 'api/Users';
+  uRole: UserRole = new UserRole();
+  userRoles: UserRole[] = [];
+  endpoint = 'api/User';
   tokenData: any;
   userID: any;
   btn = 'Add';
@@ -30,56 +30,25 @@ export class ViewUsersComponent implements OnInit {
     if (!tv) {
         this.router.navigate(['/login']);
     }
-    if (!this.authService.isAdmin()) {
-      // this.toastr.warning('', 'Access Denied!');
-      // this.router.navigate(['']);
-        return;
-    }
-    this.userID = this.authService.getUserID();
-    this.getUsers();
+    // if (!this.authService.isAdmin()) {
+    //   // this.toastr.warning('', 'Access Denied!');
+    //   // this.router.navigate(['']);
+    //     return;
+    // }
+    // this.userID = this.authService.getUserID();
+    this.getUserRoles();
   }
 
-  onAdd() {
-    this.user.createdByID = this.userID;
-    if (this.user.userID === 0) {
-      this.handleAPI.create(this.user, this.endpoint)
-        .subscribe( data => {
-            this.toastr.success('User added!', 'Success');
-            this.user = new User();
-            this.btn = 'Add';
-            this.getUsers();
-          },
-          error => {
-            if (error.object) {
-              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-            } else {
-              this.toastr.warning(error, 'Oops! An error occurred');
-            }
-          }
-        );
-    } else {
-      this.handleAPI.update(this.user, this.endpoint)
-        .subscribe( data => {
-            this.toastr.success('User Updated!', 'Success');
-            this.user = new User();
-            this.getUsers();
-          },
-          error => {
-            if (error.object) {
-              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-            } else {
-              this.toastr.warning(error, 'Oops! An error occurred');
-            }
-          }
-        );
-    }
-  }
-  showForEdit(user: any) {
-    this.btn = 'Update';
-    this.handleAPI.getByID(user.userID, this.endpoint)
+  onUpdate(dt: UserRole) {
+    this.authService.loading = true;
+    this.handleAPI.update(dt, this.endpoint)
       .subscribe( (data: any) => {
-          this.user = data;
-          // console.log(data);
+          if (data.IsSuccess) {
+            this.toastr.success('User Role Updated!', 'Success');
+            // this.userRole = new UserRole();
+          }
+          // this.getUsers();
+          this.authService.loading = false;
         },
         error => {
           if (error.object) {
@@ -87,35 +56,17 @@ export class ViewUsersComponent implements OnInit {
           } else {
             this.toastr.warning(error, 'Oops! An error occurred');
           }
+          this.authService.loading = false;
         }
-    );
-  }
-
-  removeUser(user: any) {
-    if (confirm('Are you sure you want to delete this user?')) {
-      this.handleAPI.delete(user.userID, this.endpoint)
-        .subscribe( data => {
-            this.toastr.success('User removed', 'Success');
-            this.getUsers();
-            // console.log(data);
-          },
-          error => {
-            if (error.object) {
-              this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-            } else {
-              this.toastr.warning(error, 'Oops! An error occurred');
-            }
-          }
       );
-   }
   }
-  getUsers() {
-    this.user = new User();
-    this.btn = 'Add';
+  getUserRoles() {
+    this.authService.loading = true;
     this.handleAPI.get(this.endpoint)
       .subscribe( (data: any) => {
         // console.log(data);
-          this.users = data;
+          this.userRoles = data;
+          this.authService.loading = false;
         },
         error => {
           if (error.object) {
@@ -123,6 +74,7 @@ export class ViewUsersComponent implements OnInit {
           } else {
             this.toastr.warning(error, 'Oops! An error occurred');
           }
+          this.authService.loading = false;
         }
     );
   }

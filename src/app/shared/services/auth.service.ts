@@ -7,15 +7,25 @@ import { HttpHeaders } from '@angular/common/http';
 import * as decode from 'jwt-decode';
 import {SESSION_STORAGE, LOCAL_STORAGE, WebStorageService} from 'angular-webstorage-service';
 import { HandleAPIService } from './handle-api.service';
+import { UserRole } from '../models/user';
 
 @Injectable()
 export class AuthService {
     tokenData: any;
     loading = false;
+    userRole: UserRole = new UserRole();
+    url = 'http://localhost:59350';
     constructor(
       @Inject(SESSION_STORAGE) private storage: WebStorageService,
       private api: ApiService) { }
 
+    getHeader() {
+        const token = this.getFromLocal('token');
+        const httpOptions = {
+          headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token })
+        };
+        return httpOptions;
+      }
     login(accountInfo: any) {
       const httpOptions = {
         // headers: new HttpHeaders({ 'Content-Type': 'application/json' }) text/plain
@@ -23,7 +33,7 @@ export class AuthService {
       };
       const body = JSON.stringify(accountInfo);
       // const requestOptions = new HttpRequest(({method: RequestMethod.Post, headers: headerOption});
-      const seq = this.api.post('token', body, httpOptions);
+      const seq = this.api.post('api/Token', body, httpOptions);
       return seq;
     }
     removeToken() {
@@ -42,6 +52,7 @@ export class AuthService {
     }
     decodeToken() {
       const tk = this.getFromLocal('token');
+      // console.log(tk);
       if (tk) {
         this.tokenData = decode(tk);
         return this.tokenData;
@@ -49,8 +60,8 @@ export class AuthService {
       return false;
     }
     getUserName() {
-      const td = this.decodeToken();
-      return td.unique_name;
+      const td = this.getFromLocal('username');
+      return td;
     }
 
     getUserID() {
@@ -61,7 +72,7 @@ export class AuthService {
     isTokenValid() {
       const td = this.decodeToken();
       if (td) {
-        // console.log(this.td);
+        // console.log(td);
         const current_time = new Date().getTime() / 1000;
         if (!(current_time > td.exp)) {
           return true;
@@ -76,7 +87,7 @@ export class AuthService {
       const token = this.getFromLocal('token');
       const headerOption = new HttpHeaders({
         'Content-Type':  'application/json',
-        'Authorization': 'bearer ' + token
+        'Authorization': 'Bearer ' + token
       });
       const httpOptions = {
         // headers: new HttpHeaders({ 'Content-Type': 'application/json' }) text/plain
@@ -89,5 +100,28 @@ export class AuthService {
     }
     isAdmin() {
       return this.getFromLocal('isAdmin');
+    }
+    userRight(username: string) {
+      const body = '';
+      const seq = this.api.get('api/GetUserRole/' + username, body, this.getHeader());
+      return seq;
+    }
+    getUserRight(username) {
+      this.userRight(username)
+      .subscribe( (data: any) => {
+        // console.log(data);
+          this.userRole.IsAdmin = data.IsAdmin;
+          this.userRole.UserRoleID = data.UserRoleID;
+          this.userRole.UserName = data.UserName;
+          this.userRole.ApprovePR = data.ApprovePR;
+          this.userRole.ApproveDV = data.ApproveDV;
+          this.userRole.ApproveGR = data.ApproveGR;
+        },
+        error => {
+          console.log(error);
+        }
+    );
+    // console.log(this.userRole);
+    return this.userRole;
     }
   }

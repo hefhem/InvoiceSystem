@@ -1,93 +1,95 @@
-<form class="user-form" #userForm="ngForm" (ngSubmit)="onAdd()">
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="firstName">First Name</label>
-        <input type="hidden" id="userID" name="userID" #userID="ngModel" [(ngModel)]="user.userID"/>
-        <input type="text" class="form-control" name="firstName" #firstName="ngModel" [(ngModel)]="user.firstName" required>
-      </div>
-      <div class="form-group col-md-6">
-        <label for="lastName">Last Name</label>
-        <input type="text" class="form-control" name="lastName" #lastName="ngModel" [(ngModel)]="user.lastName" required>
-        <!-- <div class="validation-error" *ngIf="ItemCode.invalid && ItemCode.touched">This field is required</div> -->
-      </div>
-      <div class="form-group col-md-4">
-          <label for="userName">User Code</label>
-          <input type="text" class="form-control" name="userName" #userName="ngModel" [(ngModel)]="user.userName" required>
-          <!-- <div class="validation-error" *ngIf="ItemCode.invalid && ItemCode.touched">This field is required</div> -->
-        </div>
-        <div class="form-group col-md-4">
-            <label for="resetPassword">Reset Password</label>
-            <select class="form-control" name="resetPassword" #resetPassword="ngModel" [(ngModel)]="user.resetPassword" required>
-                <option value="N">No</option>
-                <option value="Y">Yes</option>
-            </select>
-        </div>
-        <div class="form-group col-md-2">
-            <label for="isActive">Active</label>
-            <select class="form-control" name="isActive" #isActive="ngModel" [(ngModel)]="user.isActive" required>
-                <option value="N">No</option>
-                <option value="Y">Yes</option>
-            </select>
-        </div>
-        <div class="form-group col-md-2">
-            <label for="isAdmin">Admin</label>
-            <select class="form-control" name="isAdmin" #isAdmin="ngModel" [(ngModel)]="user.isAdmin" required>
-                <option value="N">No</option>
-                <option value="Y">Yes</option>
-            </select>
-        </div>
-    </div>
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="div-per">
+    <h2 class="bg-secondary text-white h-per">
+      USERS
+    </h2>
+  </div>
   <div class="row">
-      <div class="form-group col-md-4">
-      </div>
-      <div class="form-group col-md-2">
-        <button [disabled]="!userForm.valid" type="button" class="btn btn-block btn-info" (click)="onAdd()" title="Add to list"><i class="fas fa-plus"></i> {{btn}}</button>
-      </div>
-      <div class="form-group col-md-2">
-        <button type="button" class="btn btn-block btn-secondary" (click)="getUsers()" title="Clear form"><i class="fas fa-undo"></i> Reset</button>
-      </div>
-      <div class="form-group col-md-4">
-      </div>
+    <div class="col-md-12"><button class="btn btn-secondary" (click)="getUserRoles()">Refresh</button></div>
+    <br/>
+    <div class="col-md-12">
+      <table class="table table-sm table-hover">
+        <thead>
+          <td>
+            <strong>User Name</strong>
+          </td>
+          <td>
+            <strong>Admin</strong>
+          </td>
+          <td>
+            <strong>Approve PR</strong>
+          </td>
+          <td>
+            <strong>Approve DV</strong>
+          </td>
+          <td>
+            <strong>Approve GR</strong>
+          </td>
+        </thead>
+        <tbody>
+          <tr *ngFor="let userRole of userRoles">
+            <td>
+              {{userRole.UserName}}
+            </td>
+            <td>
+              <select type="text" class="form-control" name="IsAdmin" [(ngModel)]="userRole.IsAdmin">
+                <option value="N">No</option>
+                <option value="Y">Yes</option>
+              </select>
+            </td>
+            <td>
+              <select type="text" class="form-control" name="ApprovePR" [(ngModel)]="userRole.ApprovePR">
+                  <option value="N">No</option>
+                  <option value="Y">Yes</option>
+                </select>
+            </td>
+            <td>
+              <select type="text" class="form-control" name="ApproveDV" [(ngModel)]="userRole.ApproveDV">
+                  <option value="N">No</option>
+                  <option value="Y">Yes</option>
+                </select>
+            </td>
+            <td>
+              <select type="text" class="form-control" name="ApproveGR" [(ngModel)]="userRole.ApproveGR">
+                  <option value="N">No</option>
+                  <option value="Y">Yes</option>
+                </select>
+            </td>
+            <td align="right">
+              <a class="btn btn-primary" (click)="onUpdate(userRole)">
+                <i class="fas fa-save text-white"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </form>
-  <div class="row">
-      <div class="col-md-12">
-        <table class="table table-sm table-hover">
-          <thead>
-            <td><strong>User Code</strong></td>
-            <td><strong>First Name</strong></td>
-            <td><strong>Last Name</strong></td>
-            <td><strong>Is Admin</strong></td>
-            <td><strong>Active</strong></td>
-            <td align="right"><strong>Action</strong></td>
-          </thead>
-          <tbody>
-            <tr *ngFor="let user of users">
-              <td>
-                  {{user.userName}}
-                </td>
-              <td>
-                {{user.firstName}}
-              </td>
-              <td>
-                {{user.lastName}}
-              </td>
-              <td>
-                {{user.isAdmin == "Y" ? "Yes" : "No"}}
-              </td>
-              <td>
-                  {{user.isActive == "Y" ? "Yes" : "No"}}
-                </td>
-              <td align="right">
-                <a class="btn btn-primary" (click)="showForEdit(user)" >
-                  <i class="fas fa-edit text-white"></i>
-                </a>
-                <a class="btn btn-danger">
-                    <i class="fas fa-trash text-white" (click)="removeUser(user)"></i>
-                  </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  </div>
+</div>
+<ng-template #user let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="modal-basic-title">User Roles</h5>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
+    <form class="inv-form" #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+      <div class="modal-body">
+        <div class="form-group">
+          <!-- <label for="AutoQty">Auto Quantity</label> -->
+          <input type="text" class="form-control" name="sapUserName" [(ngModel)]="postProd.sapUserName" placeholder="Username" required>
+  
+        </div>
+        <div class="form-group">
+          <!-- <label for="AutoQty">Auto Quantity</label> -->
+          <input type="password" class="form-control" name="sapPassword" [(ngModel)]="postProd.sapPassword" placeholder="Password"
+            required>
+  
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button [disabled]="!loginForm.valid  || this.auth.loading" class="btn btn-primary" (click)="postToSAP()">Post</button>
+      </div>
+    </form>
+  </ng-template>

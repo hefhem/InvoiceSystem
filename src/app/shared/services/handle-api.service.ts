@@ -11,105 +11,58 @@ import { AuthService } from './auth.service';
 export class HandleAPIService {
 
   constructor(private api: ApiService, private authService: AuthService) { }
-
-  create(comp: any, url: string) {
+  getHeader() {
     const token = this.authService.getFromLocal('token');
-    const headerOption = new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'bearer ' + token
-    });
     const httpOptions = {
-      // headers: new HttpHeaders({ 'Content-Type': 'application/json' }) text/plain
-      headers: headerOption
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token })
     };
+
+    return httpOptions;
+  }
+  create(comp: any, url: string) {
     const body = JSON.stringify(comp);
     // const requestOptions = new HttpRequest(({method: RequestMethod.Post, headers: headerOption});
-    const seq = this.api.post(url, body, httpOptions);
+    const seq = this.api.post(url, body, this.getHeader());
 
     return seq;
   }
 
   update(comp: any, url: string) {
-    const token = this.authService.getFromLocal('token');
-    const headerOption = new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'bearer ' + token
-    });
-    const httpOptions = {
-      // headers: new HttpHeaders({ 'Content-Type': 'application/json' }) text/plain
-      headers: headerOption
-    };
     const body = JSON.stringify(comp);
     // const requestOptions = new HttpRequest(({method: RequestMethod.Post, headers: headerOption});
-    const seq = this.api.put(url, body, httpOptions);
+    const seq = this.api.put(url, body, this.getHeader());
 
     return seq;
   }
 
   get(url: string) {
-    const token = this.authService.getFromLocal('token');
-    const headerOption = new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'bearer ' + token
-    });
-    const httpOptions = {
-      // headers: new HttpHeaders({ 'Content-Type': 'application/json' }) text/plain
-      headers: headerOption
-    };
     const body = '';
     // const requestOptions = new HttpRequest(({method: RequestMethod.Post, headers: headerOption});
-    const seq = this.api.get(url, body, httpOptions);
+    const seq = this.api.get(url, body, this.getHeader());
 
     return seq;
   }
 
   getByID(id: number, url: string) {
-    const token = this.authService.getFromLocal('token');
-    const headerOption = new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'bearer ' + token
-    });
-    const httpOptions = {
-      // headers: new HttpHeaders({ 'Content-Type': 'application/json' }) text/plain
-      headers: headerOption
-    };
     const body = '';
     // const requestOptions = new HttpRequest(({method: RequestMethod.Post, headers: headerOption});
-    const seq = this.api.get(url + '/' + id, body, httpOptions);
+    const seq = this.api.get(url + '/' + id, body, this.getHeader());
 
     return seq;
   }
 
   delete(id: number, url: string) {
-    const token = this.authService.getFromLocal('token');
-    const headerOption = new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'bearer ' + token
-    });
-    const httpOptions = {
-      // headers: new HttpHeaders({ 'Content-Type': 'application/json' }) text/plain
-      headers: headerOption
-    };
     const body = '';
     // const requestOptions = new HttpRequest(({method: RequestMethod.Post, headers: headerOption});
-    const seq = this.api.delete(url + '/' + id, httpOptions);
+    const seq = this.api.delete(url + '/' + id, this.getHeader());
 
     return seq;
   }
 
   deleteWithUserID(id: number, url: string, userID: number) {
-    const token = this.authService.getFromLocal('token');
-    const headerOption = new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'bearer ' + token
-    });
-    const httpOptions = {
-      // headers: new HttpHeaders({ 'Content-Type': 'application/json' }) text/plain
-      headers: headerOption
-    };
     const body = '';
     // const requestOptions = new HttpRequest(({method: RequestMethod.Post, headers: headerOption});
-    const seq = this.api.delete(url + '/' + id + '?userID=' + userID, httpOptions);
+    const seq = this.api.delete(url + '/' + id + '?userID=' + userID, this.getHeader());
 
     return seq;
   }

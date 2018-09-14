@@ -14,13 +14,13 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService, private route: Router) { }
 
   ngOnInit() {
-    // const tv = this.authService.isTokenValid();
-    // if (!tv) {
-    //     this.route.navigate(['/login']);
-    // // } else {
-    // //   this.route.navigate(['/login']);
-    // }
-    this.route.navigate(['']);
+    const tv = this.authService.isTokenValid();
+    if (!tv) {
+        this.route.navigate(['/login']);
+    // } else {
+    //   this.route.navigate(['/login']);
+    }
+    // this.route.navigate(['']);
   }
 
 }

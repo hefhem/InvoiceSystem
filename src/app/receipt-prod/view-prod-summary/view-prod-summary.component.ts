@@ -9,15 +9,15 @@ import 'rxjs/add/operator/map';
 import { ProdMaster } from '../../shared/models/production';
 
 @Component({
-  selector: 'app-view-receipt-prod',
-  templateUrl: './view-receipt-prod.component.html',
-  styleUrls: ['./view-receipt-prod.component.css']
+  selector: 'app-view-prod-summary',
+  templateUrl: './view-prod-summary.component.html',
+  styleUrls: ['./view-prod-summary.component.css']
 })
-export class ViewReceiptProdComponent implements OnInit {
+export class ViewProdSummaryComponent implements OnInit {
+
   dtOptions: DataTables.Settings = {};
-  endpoint = 'api/ProductionReceipt';
-  prodMaster: ProdMaster[] = [];
-  userID: any;
+  endpoint = 'api/GetProductionSummary';
+  prodSummary = [];
   dtTrigger: Subject<any> = new Subject();
   constructor(
     private handleAPI: HandleAPIService,
@@ -37,16 +37,16 @@ export class ViewReceiptProdComponent implements OnInit {
       // destroy: true
     };
     // this.userID = this.auth.getUserID();
-    this.getProdMaster();
+    this.getProdSummary();
   }
 
-  getProdMaster() {
+  getProdSummary() {
     this.auth.loading = true;
-    this.prodMaster = [];
+    this.prodSummary = [];
     this.handleAPI.get(this.endpoint)
       .subscribe( (data: any) => {
           // console.log(data);
-          this.prodMaster = data;
+          this.prodSummary = data;
           this.dtOptions = {
             pagingType: 'full_numbers',
             pageLength: 10,
@@ -65,29 +65,4 @@ export class ViewReceiptProdComponent implements OnInit {
         }
     );
   }
-
-  viewRecord(id: any) {
-    console.log(id);
-    this.router.navigate(['/receipt-prod', id]);
-  }
-
-  // reverseInvoice(inv: Invoice) {
-  //   if (confirm('Are you sure you want to cancel this Invoice ' + inv.invoiceNumber + ' ?')) {
-  //     this.handleAPI.deleteWithUserID(inv.invoiceMasterID, 'api/Invoice', this.userID )
-  //       .subscribe( data => {
-  //           this.toastr.success('Invoice cancelled', 'Success');
-  //           this.getInvoices();
-  //           // console.log(data);
-  //         },
-  //         error => {
-  //           if (error.object) {
-  //             this.toastr.warning('Please check the console.', 'Oops! An error occurred');
-  //           } else {
-  //             this.toastr.warning(error, 'Oops! An error occurred');
-  //           }
-  //         }
-  //     );
-  //  }
-  // }
-
 }
