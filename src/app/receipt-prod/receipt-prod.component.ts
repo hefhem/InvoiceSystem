@@ -36,15 +36,18 @@ export class ReceiptProdComponent implements OnInit {
   value = '';
   format = 'CODE128';
   lineColor = '#000000';
-  width = 2;
-  height = 100;
-  displayValue = true;
+  width = 8;
+  height = 300;
+  pwidth = 5;
+  pheight = 150;
+  displayValue = false;
   fontOptions = '';
   font = 'monospace';
   textAlign = 'center';
   textPosition = 'bottom';
   textMargin = 2;
-  fontSize = 20;
+  fontSize = 60;
+  pfontSize = 30;
   background = '#ffffff';
   margin = 10;
   marginTop = 10;
@@ -254,7 +257,7 @@ export class ReceiptProdComponent implements OnInit {
   }
   open(content, idt: ProdDetail) {
     this.setLabelValue(idt, this.printRecord);
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'});
     setTimeout(() => { this.printRecord('print-section'); }, 300);
     setTimeout(() => { this.modalService.dismissAll(); }, 1000);
     // this.modalService.dismissAll();
@@ -273,17 +276,6 @@ export class ReceiptProdComponent implements OnInit {
     setTimeout(() => { this.printPlist('packingList'); }, 300);
     setTimeout(() => { this.modalService.dismissAll(); }, 1000);
   }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return  `with: ${reason}`;
-    }
-  }
-
   printRecord(elem: any): void {
     let printContents, popupWin;
     printContents = document.getElementById(elem).innerHTML;
@@ -295,17 +287,24 @@ export class ReceiptProdComponent implements OnInit {
           <title>Print tab</title>
           <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
           <link rel="stylesheet" href="../assets/css/fontawesome-all.css">
+          <style>
+          .table {
+            height:90%;
+            width:100%;
+            font-size:40pt;
+          }
+          td {
+            height:50px;
+            text-align:left;
+          }
+          </style>
         </head>
         <body onload="window.print();window.close()">
-        <div class="row">
-        <div class="col-md-3">
-        </div>
-        <div class="col-md-6">
-        ${printContents}
-        </div>
-        <div class="col-md-3">
-        </div>
-        </div>
+        <!--<div class="row">-->
+          <!--<div class="col-md-12">-->
+          ${printContents}
+          <!--</div>-->
+        <!--</div>-->
         </body>
       </html>`
     );
@@ -323,15 +322,28 @@ export class ReceiptProdComponent implements OnInit {
           <title>Print tab</title>
           <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
           <link rel="stylesheet" href="../assets/css/fontawesome-all.css">
+          <style>
+          @media print
+          {
+              tbody {
+                  page-break-inside: avoid;
+              }
+              thead {
+                  display: table-header-group;
+                  margin-top: 100px;
+              }
+          }
+          .table {
+            width:100%;
+            font-size:14pt;
+          }
+          td {
+            text-align:left;
+          }
+          </style>
         </head>
         <body onload="window.print();window.close()">
-        <div class="row">
-        <div class="col-md-2">
-        </div>
-        <div class="col-md-8">
         ${printContents}
-        </div>
-        <div class="col-md-2">
         </div>
         </div>
         </body>

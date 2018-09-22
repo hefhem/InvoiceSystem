@@ -192,20 +192,21 @@
   </div>
   <form class="inv-form" #qtyForm="ngForm" (ngSubmit)="onAddBatch()" *ngIf="!print">
     <div class="form-row">
-      <div class="col-md-4"></div>
+      <div class="col-md-5"></div>
       <div class="form-group col-md-2">
-        <label for="AutoQty">
-          <strong>Auto Quantity</strong>
-        </label>
-        <input type="number" min="0" class="form-control" name="AutoQty" [(ngModel)]="AutoQty" (keyup)="makeQtyValid()">
-      </div>
-      <div class="form-group col-md-1">
-        <label for="">&nbsp;</label>
-        <button type="submit" [disabled]="!qtyValid" class="btn btn-block btn-info" title="Add to list">
-          <i class="fa fa-plus"></i>
-        </button>
-      </div>
-      <div class="col-md-4"></div>
+          <label for="AutoQty">
+              <strong>Auto Quantity</strong>
+            </label>
+          <div class="input-group">
+              <input type="number" min="0" class="form-control" name="AutoQty" [(ngModel)]="AutoQty" (keyup)="makeQtyValid()">
+              <div class="input-group-append">
+                  <button type="submit" [disabled]="!qtyValid" class="btn btn-block btn-info" title="Add to list">
+                      <i class="fa fa-plus"></i>
+                    </button>
+              </div>
+            </div>
+        </div>
+      <div class="col-md-5"></div>
     </div>
   </form>
   <div class="row">
@@ -281,28 +282,31 @@
       <div class="col-md-12 text-center">
         <table class="table text-center">
           <tr>
-            <td colspan="2">
-              <h6>ARISTOCRAT INDUSTRIES LTD.</h6>
-              <P>
-                PLOT NO. 7&B, BLOCK-X, OTA, INDUSTRIAL ESTATE, OGUN STATE, NIGERIA
+            <td colspan="2" style="text-align:center;">
+              <h6 style="font-size:45pt;"><strong>ARISTOCRAT INDUSTRIES LTD.</strong></h6>
+              <P style="font-size:30pt;">
+                PLOT NO. 7&B, BLOCK-X, OTA, INDUSTRIAL ESTATE
+              </P>
+              <P style="font-size:30pt;">
+                 <strong>OGUN STATE, NIGERIA</strong> 
               </P>
             </td>
           </tr>
           <tr>
-            <td colspan="2">
-              {{prodMaster.ItemName}}
+            <td colspan="2" style="text-align:center;">
+              <strong>{{prodMaster.ItemName}}</strong> 
             </td>
           </tr>
           <tr>
-            <td>Batch No.: {{bc_batchno}}</td>
-            <td>Weight: {{bc_weight}}Kgs</td>
+            <td><strong>Batch No</strong><br/> {{bc_batchno}}</td>
+            <td><strong>Weight</strong><br/> {{bc_weight}} KGS</td>
           </tr>
           <tr>
-            <td>PACKED ON: {{prodMaster.ProdDate | date: 'dd/MM/yyyy'}}</td>
-            <td>Machine No.: {{prodMaster.MachineNo}}</td>
+            <td><strong>PACKED ON</strong><br/>  {{prodMaster.ProdDate | date: 'dd/MM/yyyy'}}</td>
+            <td><strong>Machine No</strong><br/>  {{prodMaster.MachineNo}}</td>
           </tr>
           <tr>
-            <td colspan="2">
+            <td colspan="2" style="text-align:center;">
               <ngx-barcode [bc-element-type]="elementType" [bc-value]="value" [bc-format]="format" [bc-line-color]="lineColor" [bc-width]="width"
                 [bc-height]="height" [bc-display-value]="displayValue" [bc-font-options]="fontOptions" [bc-font]="font" [bc-text-align]="textAlign"
                 [bc-text-position]="textPosition" [bc-text-margin]="textMargin" [bc-font-size]="fontSize" [bc-background]="background"
@@ -311,13 +315,13 @@
             </td>
           </tr>
           <tr>
-            <td colspan="2">
-              SUPERVISOR: {{prodMaster.Supervisor}}
+            <td colspan="2" style="text-align:center;">
+              <strong>SUPERVISOR</strong><br/>  {{prodMaster.Supervisor}}
             </td>
           </tr>
           <tr>
             <td colspan="2">
-              Note:
+              <strong>Note:</strong>  Goods sold in good condition can not be returned.
             </td>
           </tr>
         </table>
@@ -364,34 +368,46 @@
   <div class="modal-body">
   <div class="row" id="packingList">
     <!-- <div class="row"> -->
-      <div class="col-md-12 text-center" style="margin:0,auto,0,auto;">
-        <h6 class="text-center"><strong>ARISTOCRAT INDUSTRIES LTD.</strong> </h6>
+      <div class="col-md-12 text-center">
+        <h6 class="text-center" style="font-size:35pt;"><strong>ARISTOCRAT INDUSTRIES LTD.</strong> </h6>
       </div>
-      <div class="col-md-12 text-center" style="margin:0,auto,0,auto;">
+      <div class="col-md-12 text-center" style="font-size:25pt;">
           <p class="text-center"><strong>PACKING LIST</strong> </p>
       </div>
     <!-- </div> -->
     <div class="col-md-12 text-center">
       <table class="table">
+        <thead>
         <tr>
+            <td colspan="5" style="text-align:center;">
+                <ngx-barcode [bc-element-type]="elementType" [bc-value]="prodMaster.PackingNo" [bc-format]="format" [bc-line-color]="lineColor" [bc-width]="pwidth"
+                [bc-height]="pheight" [bc-display-value]="displayValue" [bc-font-options]="fontOptions" [bc-font]="font" [bc-text-align]="textAlign"
+                [bc-text-position]="textPosition" [bc-text-margin]="textMargin" [bc-font-size]="pfontSize" [bc-background]="background"
+                [bc-margin]="margin" [bc-margin-top]="marginTop" [bc-margin-bottom]="marginBottom" [bc-margin-left]="marginLeft"
+                [bc-margin-right]="marginRight"></ngx-barcode>
+            </td>
+        </tr>
+        <tr style="font-size:25pt;">
           <td>Customer:</td>
           <td colspan="2"><strong>{{prodMaster.CardName}}</strong></td>
-          <td><strong>Packing No.</strong></td>
-          <td>{{prodMaster.PackingNo}}</td>
+          <td>Packing No.</td>
+          <td><strong>{{prodMaster.PackingNo}}</strong></td>
         </tr>
         <tr>
             <td></td>
-            <td></td>
-            <td><strong>Date & Time:</strong></td>
-            <td colspan="2">{{currentDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+            <td></td> 
+            <td><strong>Date:</strong></td>
+            <td colspan="2">{{prodMaster.ProdDate | date: 'dd/MM/yyyy'}}</td>
           </tr>
         <tr>
-            <td><strong>Batch No.</strong> </td>
-            <td></td>
+            <td><strong>BATCH NO.</strong> </td>
+            <td><strong>PRODUCT</strong></td>
             <td><strong>UOM</strong></td>
             <td><strong>UNIT</strong></td>
             <td><strong>WEIGHT/(KGS)</strong></td>
         </tr>
+        </thead>
+        <tbody>
         <tr>
             <td>{{prodDetails.length}}</td>
             <td colspan="2">TOTAL</td>
@@ -405,15 +421,8 @@
             <td>1</td>
             <td>{{idt.Quantity}}</td>
         </tr>
-        <tr>
-            <td colspan="5">
-                <ngx-barcode [bc-element-type]="elementType" [bc-value]="prodMaster.PackingNo" [bc-format]="format" [bc-line-color]="lineColor" [bc-width]="width"
-                [bc-height]="height" [bc-display-value]="displayValue" [bc-font-options]="fontOptions" [bc-font]="font" [bc-text-align]="textAlign"
-                [bc-text-position]="textPosition" [bc-text-margin]="textMargin" [bc-font-size]="fontSize" [bc-background]="background"
-                [bc-margin]="margin" [bc-margin-top]="marginTop" [bc-margin-bottom]="marginBottom" [bc-margin-left]="marginLeft"
-                [bc-margin-right]="marginRight"></ngx-barcode>
-            </td>
-        </tr>
+        
+      </tbody>
       </table>
     </div>
   </div>
