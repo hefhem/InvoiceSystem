@@ -54,33 +54,10 @@ export class ArDeliveryComponent implements OnInit {
     }
     this.userName = this.auth.getUserName();
     this.id = this.route.snapshot.params['id'];
+    // console.log(this.id);
     if (this.id > 0) {
       this.getDeliveryMasterDetails(this.id);
     } else {
-    // this.deliveryDetail = {
-    //   DeliveryDetailID: 1,
-    //   DeliveryMasterID: 1,
-    //   ItemNo: 'FG00001',
-    //   ItemName: 'Shrink Label - Printed',
-    //   Quantity: 3000,
-    //   SelectedQty: 0,
-    //   UnitPrice: 500,
-    //   Total: 7000000,
-    //   IsPicked: false
-    // };
-    // this.deliveryDetails.push(this.deliveryDetail);
-    // const del = {
-    //   DeliveryDetailID: 2,
-    //   DeliveryMasterID: 1,
-    //   ItemNo: 'FG00002',
-    //   ItemName: 'Pepsi Label - Printed',
-    //   Quantity: 4000,
-    //   SelectedQty: 0,
-    //   UnitPrice: 300,
-    //   Total: 6000000,
-    //   IsPicked: false
-    // };
-    // this.deliveryDetails.push(del);
     this.docDate = this.calendar.getToday();
     this.deliveryMaster.DocDate = new Date(Date.UTC(this.docDate.year, this.docDate.month - 1, this.docDate.day, 0, 0, 0, 0));
     this.deliveryMaster.CreatedBy = this.userName;
@@ -167,16 +144,22 @@ export class ArDeliveryComponent implements OnInit {
     this.auth.loading = true;
     // tslint:disable-next-line:triple-equals
     // if (this.prodMaster.DocNum != '') {
-      this.handleAPI.get('api/GetDelivery/' + id)
+      this.handleAPI.get('api/nGetDeliveryByID/' + id)
         .subscribe( (data: any) => {
-          // console.log(data);
-            this.objDelivery = data;
-            this.deliveryMaster = this.objDelivery.deliveryMaster;
-            this.objDDP = this.objDelivery.deliveryDetailsPackings;
+            // const dt = JSON.parse(data);
+            if (data.deliveryMaster != null) {
+              this.deliveryMaster = data.deliveryMaster;
+              this.deliveryDetails = data.deliveryDetails;
+              this.deliveryPacking = data.deliveryPackings;
+              this.auth.loading = false;
+              this.print = true;
+              this.formValid = false;
+              this.isPostable = this.deliveryMaster.IsApproved ? true : false;
+            } else {
+              this.toastr.warning('No record found!');
+              this.resetForm(true);
+            }
             this.auth.loading = false;
-            this.print = true;
-            this.formValid = false;
-            this.isPostable = this.deliveryMaster.IsApproved ? true : false;
           },
           error => {
             if (typeof error === 'string') {

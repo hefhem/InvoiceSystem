@@ -116,13 +116,20 @@ export class ReceiptProdComponent implements OnInit {
       this.handleAPI.get('api/GetPR/' + id)
         .subscribe( (data: any) => {
           // console.log(data);
+          if (data.prodMaster != null) {
+            this.auth.loading = false;
             this.prodMaster = data.prodMaster;
             this.prodDetails = data.prodDetails;
             this.auth.loading = false;
             this.print = true;
             this.formValid = false;
             this.isPostable = this.prodMaster.IsApproved ? true : false;
-          },
+          } else {
+            this.toastr.warning('No record found!');
+              this.resetForm(true);
+          }
+          this.auth.loading = false;
+        },
           error => {
             if (typeof error === 'string') {
               this.toastr.warning(error, 'Oops! An error occurred');

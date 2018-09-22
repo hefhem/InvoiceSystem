@@ -40,6 +40,10 @@ const routes: Routes = [
     component: ArDeliveryComponent
   },
   {
+    path: 'ar-delivery/:id',
+    component: ArDeliveryComponent
+  },
+  {
     path: 'view-ar-delivery',
     component: ViewArDeliveryComponent
   },
