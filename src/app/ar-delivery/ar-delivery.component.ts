@@ -199,6 +199,7 @@ export class ArDeliveryComponent implements OnInit {
     };
     this.handleAPI.create(dt, 'api/nPostDelivery')
       .subscribe( (data: any) => {
+        if (data.IsSuccess) {
           this.toastr.success('Delivery created!', 'Success');
           // console.log(data);
           this.print = true;
@@ -206,6 +207,9 @@ export class ArDeliveryComponent implements OnInit {
           this.deliveryMaster.DeliveryMasterID = data.ID;
           this.formValid = false;
           this.saveBtn = '';
+        } else {
+          this.toastr.warning(data.Response);
+        }
           this.auth.loading = false;
         },
         error => {
@@ -238,7 +242,7 @@ export class ArDeliveryComponent implements OnInit {
     const tmp = 'saplogin';
     this.modalService.dismissAll();
     this.postDel.DeliveryMasterID = this.deliveryDetail.DeliveryMasterID;
-    this.handleAPI.create(this.postDel, 'api/PostDeliveryToSAP')
+    this.handleAPI.create(this.postDel, 'api/nPostDeliveryToSAP')
       .subscribe( (data: any) => {
         if (data.IsSuccess) {
           this.toastr.success('Delivery posted to SAP successfully!', 'Success');

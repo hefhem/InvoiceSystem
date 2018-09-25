@@ -433,6 +433,7 @@ export class ReceiptProdComponent implements OnInit {
     };
     this.handleAPI.create(dt, 'api/ProductionReceipt')
       .subscribe( (data: any) => {
+        if (data.IsSuccess) {
           this.toastr.success('Production Receipt created!', 'Success');
           // console.log(data);
           this.print = true;
@@ -441,6 +442,9 @@ export class ReceiptProdComponent implements OnInit {
           this.prodMaster.PackingNo = data.PackingNo;
           this.formValid = false;
           this.saveBtn = '';
+        } else {
+          this.toastr.warning(data.Response);
+        }
           this.auth.loading = false;
         },
         error => {
