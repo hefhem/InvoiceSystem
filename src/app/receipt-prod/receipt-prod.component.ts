@@ -476,7 +476,7 @@ export class ReceiptProdComponent implements OnInit {
     this.isPostable = false;
     const tmp = 'saplogin';
     this.modalService.dismissAll();
-    this.postProd.ProdMasterID = this.prodMaster.ProdMasterID;
+    this.postProd.ObjectID = this.prodMaster.ProdMasterID;
     this.handleAPI.create(this.postProd, 'api/PostProductionOrder')
       .subscribe( (data: any) => {
         if (data.IsSuccess) {

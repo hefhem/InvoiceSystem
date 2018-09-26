@@ -98,6 +98,9 @@
       <table class="table table-sm table-hover" width="100px">
         <thead>
           <td>
+              <strong>Item Code</strong>
+            </td>
+          <td>
             <strong>Item Name</strong>
           </td>
           <td>
@@ -112,6 +115,9 @@
         </thead>
         <tbody>
           <tr *ngFor="let idt of deliveryDetails">
+              <td>
+                  {{idt.ItemNo}}
+                </td>
             <td>
               {{idt.ItemName}}
             </td>
@@ -263,12 +269,12 @@
     <div class="modal-body">
       <div class="form-group">
         <!-- <label for="AutoQty">Auto Quantity</label> -->
-        <input type="text" class="form-control" name="sapUserName" [(ngModel)]="postDelivery.sapUserName" placeholder="Username" required>
+        <input type="text" class="form-control" name="sapUserName" [(ngModel)]="postDel.sapUserName" placeholder="Username" required>
 
       </div>
       <div class="form-group">
         <!-- <label for="AutoQty">Auto Quantity</label> -->
-        <input type="password" class="form-control" name="sapPassword" [(ngModel)]="postDelivery.sapPassword" placeholder="Password"
+        <input type="password" class="form-control" name="sapPassword" [(ngModel)]="postDel.sapPassword" placeholder="Password"
           required>
 
       </div>

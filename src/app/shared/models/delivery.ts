@@ -40,7 +40,7 @@ export class DeliveryDetailsPackings {
     deliveryPacking: DeliveryPacking[] = [];
 }
 export class PostDelivery {
-    DeliveryMasterID: number;
+    ObjectID: number;
     sapUserName: string;
     sapPassword: string;
 }

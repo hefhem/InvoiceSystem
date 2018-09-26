@@ -43,7 +43,7 @@ export class SAPCompany {
 }
 
 export class PostProductionReceipt {
-    ProdMasterID: number;
+    ObjectID: number;
     sapUserName: string;
     sapPassword: string;
 }

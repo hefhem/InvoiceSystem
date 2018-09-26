@@ -241,7 +241,7 @@ export class ArDeliveryComponent implements OnInit {
     this.isPostable = false;
     const tmp = 'saplogin';
     this.modalService.dismissAll();
-    this.postDel.DeliveryMasterID = this.deliveryDetail.DeliveryMasterID;
+    this.postDel.ObjectID = this.deliveryMaster.DeliveryMasterID;
     this.handleAPI.create(this.postDel, 'api/nPostDeliveryToSAP')
       .subscribe( (data: any) => {
         if (data.IsSuccess) {
@@ -350,8 +350,8 @@ export class ArDeliveryComponent implements OnInit {
         }
         sum = sum + dp.Quantity;
       });
-      const dd = this.deliveryDetails.filter( x => x.DeliveryDetailID === this.ddid)[0];
-      const dr = this.deliveryDetails.filter( x => x.DeliveryDetailID !== this.ddid);
+      const dd = this.deliveryDetails.filter( x => x.LineNum === this.ddid)[0];
+      const dr = this.deliveryDetails.filter( x => x.LineNum !== this.ddid);
       dd.SelectedQty = sum;
       dr.push(dd);
       this.deliveryDetails = dr;
