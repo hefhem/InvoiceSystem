@@ -12,6 +12,7 @@
       <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover table table-sm table-hover">
         <thead>
           <tr>
+              <th><strong>Delivery ID</strong></th>
             <th><strong>Order No</strong></th>
             <th><strong>Date</strong></th>
             <th><strong>Customer Name</strong></th>
@@ -24,6 +25,9 @@
         </thead>
         <tbody>
           <tr *ngFor="let idt of deliveryMaster">
+              <td>
+                  {{idt.DeliveryMasterID}}
+                </td>
             <td>
                 {{idt.SOrderNo}}
               </td>

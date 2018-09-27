@@ -509,7 +509,7 @@ export class ReceiptProdComponent implements OnInit {
     this.auth.loading = true;
     this.isPostable = false;
     const id = this.prodMaster.ProdMasterID;
-    this.handleAPI.update(this.userID, 'api/ApprovePR/' + id)
+    this.handleAPI.create(this.userID, 'api/ApprovePR/' + id)
       .subscribe( (data: any) => {
         if (data.IsSuccess) {
           this.toastr.success('Document approved successfully!', 'Success');

@@ -19,6 +19,7 @@ export class DeliveryDetail {
     ItemNo = '';
     ItemName = '';
     Quantity = 0;
+    OpenQty = 0;
     SelectedQty = 0;
     UnitPrice = 0;
     Total = 0;

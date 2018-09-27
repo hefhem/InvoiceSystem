@@ -274,7 +274,7 @@ export class ArDeliveryComponent implements OnInit {
     this.auth.loading = true;
     this.isPostable = false;
     const id = this.deliveryMaster.DeliveryMasterID;
-    this.handleAPI.update(this.userName, 'api/ApproveDelivery/' + id)
+    this.handleAPI.create(this.userName, 'api/ApproveDelivery/' + id)
       .subscribe( (data: any) => {
         if (data.IsSuccess) {
           this.toastr.success('Document approved successfully!', 'Success');

@@ -20,7 +20,7 @@
   <hr/>
   <div class="row">
     <div class="col-md-12">
-      <form class="inv-form" #deliveryForm="ngForm" (ngSubmit)="onSubmit(deliveryForm)">
+      <form class="inv-form" #deliveryForm="ngForm">
         <div class="form-row">
           <input type="hidden" name="DeliveryMasterID" #DeliveryMasterID="ngModel" [(ngModel)]="deliveryMaster.DeliveryMasterID" value="0">
           <div class="form-group col-md-2">
@@ -107,6 +107,9 @@
             <strong>Quantity</strong>
           </td>
           <td>
+              <strong>Open Qty</strong>
+            </td>
+          <td>
               <strong>Picked Qty</strong>
             </td>
           <td>
@@ -124,6 +127,9 @@
             <td>
               {{idt.Quantity | number: '1.2'}}
             </td>
+            <td>
+                {{idt.OpenQty | number: '1.2'}}
+              </td>
             <td>
                 {{idt.SelectedQty | number: '1.2'}}
               </td>

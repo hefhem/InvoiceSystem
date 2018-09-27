@@ -41,7 +41,7 @@ export class ViewUsersComponent implements OnInit {
 
   onUpdate(dt: UserRole) {
     this.authService.loading = true;
-    this.handleAPI.update(dt, this.endpoint)
+    this.handleAPI.create(dt, 'api/UpdateUserRole')
       .subscribe( (data: any) => {
           if (data.IsSuccess) {
             this.toastr.success('User Role Updated!', 'Success');
@@ -62,7 +62,7 @@ export class ViewUsersComponent implements OnInit {
   }
   getUserRoles() {
     this.authService.loading = true;
-    this.handleAPI.get(this.endpoint)
+    this.handleAPI.get('api/GetUserRoles')
       .subscribe( (data: any) => {
         // console.log(data);
           this.userRoles = data;

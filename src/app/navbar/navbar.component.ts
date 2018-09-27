@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit {
   isAdmin: boolean;
   cls = 'd-none';
   userRole: UserRole = new UserRole();
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(public auth: AuthService, private router: Router) {
     // this.getUserRole();
     // if (this.auth.isAdmin()) {
     //   this.cls = '';
